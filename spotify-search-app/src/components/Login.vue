@@ -1,8 +1,10 @@
 <template>
-  <div class="hello">
-    <img alt="Vue logo" src="../assets/logo.png" />
+  <div class="container">
     <h1>{{ msg }}</h1>
-    <spotify-button @click.native="requestAuth">Start!</spotify-button>
+    <img class="app-logo" alt="App logo" src="../assets/img/login.svg" />
+    <p>Welcome! In order to use this app you need to authorize it by clicking the button below.</p>
+    <p>You'll be redirected to Spotify Account services for login in</p>
+    <spotify-button @click.native="requestAuth">Login!</spotify-button>
   </div>
 </template>
 
@@ -18,7 +20,7 @@ export default {
   props: {
     msg: {
       type: String,
-      default: 'Welcome to My Spotify Search App'
+      default: 'My Spotify Search App'
     },
   },
   methods: {
@@ -29,8 +31,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 </style>

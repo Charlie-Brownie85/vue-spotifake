@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import router from "../router";
+import { mapActions } from 'vuex';
+import router from '../router';
 
 export default {
   computed: {
@@ -20,12 +20,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["manageSuccessfulAuth", "manageFailedAuth"]),
+    ...mapActions(['manageSuccessfulAuth', 'manageFailedAuth']),
   },
   mounted: async function () {
     const route = this.$route;
-    console.log("You reached the redirectPage");
-    console.log(route);
 
     if (route.hash) {
       await this.manageSuccessfulAuth(route.hash);

@@ -9,28 +9,31 @@ const {
 const state = {
   status: '',
   token: localStorage.getItem('spotify-access-token') || '',
-  tokenExpirationTime: ''
+  tokenExpirationTime: localStorage.getItem('tokenExpirationTime') || '',
 };
 
 const mutations = {
-  'AUTH_REQUEST'(state){
+  'AUTH_REQUEST'(state) {
     state.status = 'loading';
   },
-  'AUTH_SUCCESS'(state, payload){
+  'AUTH_SUCCESS'(state, payload) {
     state.status = 'logged';
     state.token = payload.token;
     state.tokenExpirationTime = payload.expirationTime;
     localStorage.setItem('spotify-access-token', payload.token);
     localStorage.setItem('tokenExpirationTime', payload.expirationTime);
-    utils.setAuthHeader();
+    utils.setAuthHeader(this._vm.$http, payload.token);
   },
-  'AUTH_ERROR'(state){
+  'AUTH_ERROR'(state) {
     state.status = 'error';
   },
-  'LOGOUT'(state){
+  'LOGOUT'(state) {
     state.status = '';
     state.token = '';
     state.tokenExpirationTime = '';
+    localStorage.removeItem('spotify-access-token');
+    localStorage.removeItem('tokenExpirationTime');
+    utils.removeAuthHeader(this._vm.$http);
   },
 };
 
@@ -52,12 +55,17 @@ const actions = {
   },
   manageFailedAuth: ({ commit }) => {
     commit('AUTH_ERROR');
-  }
+  },
+  logout: ({ commit })=> {
+    commit('LOGOUT');
+  },
 };
 
 const getters = {
-  isAuthenticated: state => !!state.token,
+  token: state => state.token,
+  isAuthenticated: state => !!state.token && !utils.isTokenExpired(state.tokenExpirationTime),
   authStatus: state => state.status,
+  hasTokenExpired: state => !state.tokenExpirationTime || utils.isTokenExpired(state.tokenExpirationTime)
 };
 
 export default {

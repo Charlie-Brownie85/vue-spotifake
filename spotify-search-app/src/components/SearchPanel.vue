@@ -14,13 +14,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      search: 'search'
-    }),
+    ...mapActions(['search', 'clearResults']),
     performSearch(e) {
       const searchTerm = e.target.value;
-      const query = { searchTerm, type: this.filters };
-      this.search(query);
+      if (searchTerm !== '') {
+        const query = { searchTerm, type: this.filters };
+        this.search(query);
+      } else {
+        this.clearResults();
+      }
     }
   }
 }

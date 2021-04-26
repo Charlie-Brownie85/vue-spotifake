@@ -1,14 +1,18 @@
 import VueRouter from 'vue-router';
 import store from './store/store';
-import HelloWorld from './components/HelloWorld.vue';
+import Login from './components/Login.vue';
 import SearchPanel from './components/SearchPanel.vue';
 import RedirectPage from './components/RedirectPage.vue';
 
 const routes = [
   {
     path: '/',
+    redirect: '/search'
+  },
+  {
+    path: '/login',
     name: 'login',
-    component: HelloWorld
+    component: Login
   },
   {
     path: '/redirect',

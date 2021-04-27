@@ -9,7 +9,7 @@ const state = {
 const mutations = {
   'SET_SEARCH_RESULTS'(state, payload) {
     state.results = JSON.parse(JSON.stringify(payload));
-    console.log(payload);
+    // console.log(payload);
   },
   'CLEAR_SEARCH_RESULTS'(state) {
     state.results = {};
@@ -42,6 +42,9 @@ const actions = {
 
 const getters = {
   searchResults: (state) => state.results,
+  albumResults: (state) => state.results?.albums?.items,
+  artistResults: (state) => state.results?.artists?.items,
+  trackResults: (state) => state.results?.tracks?.items,
 };
 
 export default {

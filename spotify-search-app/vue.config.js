@@ -2,7 +2,7 @@
 module.exports = {
   chainWebpack: (config) => {
     config.plugin('html').tap((args) => {
-      args[0].title = 'My Spotify Search App';
+      args[0].title = 'Spotifake';
       return args;
     });
   },

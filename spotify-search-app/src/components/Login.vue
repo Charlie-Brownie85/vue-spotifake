@@ -1,15 +1,21 @@
 <template>
   <div class="container">
-    <h1>{{ msg }}</h1>
-    <img class="app-logo" alt="App logo" src="../assets/img/login.svg" />
-    <p>Welcome! In order to use this app you need to authorize it by clicking the button below.</p>
-    <p>You'll be redirected to Spotify Account services for login in</p>
-    <spotify-button @click.native="requestAuth">Login!</spotify-button>
+    <img class="login-logo" alt="login logo" src="../assets/img/login.svg" />
+    <div>
+      <p>
+        Welcome! In order to use this app you need to authorize it by clicking
+        the button below.
+      </p>
+      <p>You'll be redirected to Spotify Account services for login in</p>
+    </div>
+    <spotify-button class="login-btn" @click.native="requestAuth"
+      >Login!</spotify-button
+    >
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 import SpotifyButton from "./SpotifyButton";
 
 export default {
@@ -17,22 +23,52 @@ export default {
   components: {
     SpotifyButton,
   },
-  props: {
-    msg: {
-      type: String,
-      default: 'My Spotify Search App'
-    },
-  },
   methods: {
-    ...mapActions(['requestAuth'])
+    ...mapActions(["requestAuth"]),
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
+.container {
+  --grid-row-scheme: 3fr 2fr 1fr;
+  --grid-row-gap: 10px;
+  --grid-align: end;
+  
+  --login-btn-justify: stretch;
+  --login-btn-margin-bottom: 20px;
+
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  padding: var(--container-padding);
+  display: grid;
+  grid-template-rows: var(--grid-row-scheme);
+  justify-items: center;
+  align-items: var(--grid-align);
+  row-gap: var(--grid-row-gap);
+
+  @media only screen and (min-width: map-get($breakpoints, "sm")) {
+    --login-btn-justify: auto;
+    --login-btn-margin-bottom: auto;
   }
+
+  @media only screen and (min-width: map-get($breakpoints, "lg")) {
+    --grid-row-scheme: 1fr 1fr 1fr;
+    --grid-row-gap: 30px;
+    --grid-align: center;
+  }
+}
+
+.login-logo {
+  display: block;
+  width: clamp(200px, 70%, 350px);
+  height: auto;
+}
+
+.login-btn {
+  min-width: 200px;
+  justify-self: var(--login-btn-justify);
+  margin-bottom: var(--login-btn-margin-bottom);
+}
 </style>

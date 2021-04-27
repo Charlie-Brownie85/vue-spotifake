@@ -1,6 +1,35 @@
-// General shared variables
-$background-color-black: $color-spotify-black;
+//* General shared static variables
+$body-background-color: $color-spotify-light-black;
+
+$breakpoints: (
+  'sm': 580px,
+  'md': 768px,
+  'lg': 1024px,
+) !default;
+
+//* General shared dynamic variables
 
 :root {
   --base-font-size: 16px;
+  --header-height: 60px;
+  --base-lateral-padding: 0 10px;
+  --container-padding: 20px 20px;
+}
+
+//* Redefining variables values on breakpoints
+@media only screen and (min-width: map-get($breakpoints, 'sm')) {
+  
+  :root {
+    --header-height: 100px;
+    --base-lateral-padding: 0 30px;
+  }
+
+}
+
+@media only screen and (min-width: map-get($breakpoints, 'sm')) {
+  
+  :root {
+    --container-padding: 40px 30px;
+  }
+
 }

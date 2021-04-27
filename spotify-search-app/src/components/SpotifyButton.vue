@@ -14,7 +14,7 @@ export default {
 <style lang="scss" scoped>
   $btn-border-radius: 500px;
   $btn-padding: 11px 32px 9px;
-  $btn-font-size: 12px;
+  $btn-font-size: 14px;
 
   .btn {
     display: inline-flex;

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <img class="login-logo" alt="login logo" src="../assets/img/login.svg" />
-    <div>
+    <div class="login-text">
       <p>
         Welcome! In order to use this app you need to authorize it by clicking
         the button below.
@@ -54,7 +54,7 @@ export default {
   }
 
   @media only screen and (min-width: map-get($breakpoints, "lg")) {
-    --grid-row-scheme: 1fr 1fr 1fr;
+    --grid-row-scheme: 2fr 1fr 1fr;
     --grid-row-gap: 30px;
     --grid-align: center;
   }
@@ -62,8 +62,20 @@ export default {
 
 .login-logo {
   display: block;
-  width: clamp(200px, 70%, 350px);
+  width: clamp(200px, 60%, 240px);
   height: auto;
+  align-self: end;
+}
+
+.login-text {
+  max-width: 600px;
+
+  @media only screen and (min-width: map-get($breakpoints, 'lg')) {
+    p {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+  }
 }
 
 .login-btn {

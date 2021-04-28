@@ -4,12 +4,15 @@ const { VUE_APP_SEARCH_ENDPOINT } = process.env;
 
 const state = {
   results: {},
+  searchStatus: 'DONE',
 };
 
 const mutations = {
   'SET_SEARCH_RESULTS'(state, payload) {
     state.results = JSON.parse(JSON.stringify(payload));
-    // console.log(payload);
+  },
+  'SET_SEARCH_STATUS'(state, payload) {
+    state.searchStatus = payload;
   },
   'CLEAR_SEARCH_RESULTS'(state) {
     state.results = {};
@@ -19,6 +22,7 @@ const mutations = {
 const actions = {
   async search({ commit }, query) {
     try {
+      commit('SET_SEARCH_STATUS', 'SEARCHING');
       const res = await this._vm.$http.get(VUE_APP_SEARCH_ENDPOINT, {
         headers: {
           Accept: 'application/json',
@@ -33,7 +37,9 @@ const actions = {
         },
       });
       commit('SET_SEARCH_RESULTS', res.data);
+      commit('SET_SEARCH_STATUS', 'DONE');
     } catch (error) {
+      commit('SET_SEARCH_STATUS', 'DONE');
       console.log('SEARCH ERROR: ' + error);
     }
   },
@@ -42,9 +48,10 @@ const actions = {
 
 const getters = {
   searchResults: (state) => state.results,
-  albumResults: (state) => state.results?.albums?.items,
-  artistResults: (state) => state.results?.artists?.items,
-  trackResults: (state) => state.results?.tracks?.items,
+  searchStatus: (state) => state.searchStatus,
+  albumResults: (state) => state.results?.albums?.items || [],
+  artistResults: (state) => state.results?.artists?.items || [],
+  trackResults: (state) => state.results?.tracks?.items || [],
 };
 
 export default {

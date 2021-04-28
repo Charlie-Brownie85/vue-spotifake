@@ -1,7 +1,7 @@
 <template>
   <div class="spotify-card">
     <div class="spotify-card__picture">
-      <img :src="imageURL || '../assets/img/img-placeholder.jpg'" alt="placeholder" />
+      <img :src="imageURL" alt="placeholder" />
     </div>
     <div class="spotify-card__info">
       <span class="spotify-card__title">{{ cardTitle }}</span>
@@ -26,9 +26,9 @@
     },
     computed: {
       imageURL() {
-        return this.cardType === 'track'
+        return (this.cardType === 'track'
           ? this.cardInfo.album?.images[1]?.url
-          : this.cardInfo.images[1]?.url;
+          : this.cardInfo.images[1]?.url) || require('../assets/img/img-placeholder.jpg');
       },
       cardSubtitle() {
         let subtitleText = '';

@@ -3,6 +3,7 @@
     <div class="search__controls">
       <div class="search__searchbox">
         <input
+          v-model="searchTerm"
           @input="performSearch"
           type="text"
           name="searchbox"
@@ -10,8 +11,11 @@
         />
       </div>
     </div>
-    <div class="search__results">
-      <div class="search__results-column">
+    <div v-if="noResults" class="search__message">
+      <p>{{ searchMessage }}</p>
+    </div>
+    <div v-else class="search__results">
+      <div v-if="thereAreartistResults" class="search__results-column">
         <h3>Artists</h3>
         <SpotifyCard
           v-for="artist in artistResults"
@@ -19,7 +23,7 @@
           :cardInfo="artist"
         />
       </div>
-      <div class="search__results-column">
+      <div v-if="thereAreTrackResults" class="search__results-column">
         <h3>Songs</h3>
         <SpotifyCard
           v-for="track in trackResults"
@@ -27,7 +31,7 @@
           :cardInfo="track"
         />
       </div>
-      <div class="search__results-column">
+      <div v-if="thereAreAlbumResults" class="search__results-column">
         <h3>Albums</h3>
         <SpotifyCard
           v-for="album in albumResults"
@@ -49,18 +53,40 @@
     },
     data() {
       return {
+        searchTerm: '',
         filters: ['artist', 'track', 'album'],
       };
     },
     computed: {
-      ...mapGetters(['albumResults', 'artistResults', 'trackResults']),
+      ...mapGetters(['searchStatus', 'albumResults', 'artistResults', 'trackResults']),
+      thereAreAlbumResults() {
+        return this.albumResults && this.albumResults.length > 0;
+      },
+      thereAreartistResults() {
+        return this.artistResults && this.artistResults.length > 0;
+      },
+      thereAreTrackResults() {
+        return this.trackResults && this.trackResults.length > 0;
+      },
+      noResults() {
+        return (
+          this.searchStatus !== 'SEARCHING' &&
+          !this.thereAreAlbumResults &&
+          !this.thereAreartistResults &&
+          !this.thereAreTrackResults
+        );
+      },
+      searchMessage() {
+        return this.searchTerm === ''
+          ? 'Type something to start searching'
+          : '😰 Oops! No results found...';
+      },
     },
     methods: {
       ...mapActions(['search', 'clearResults']),
-      performSearch(e) {
-        const searchTerm = e.target.value;
-        if (searchTerm !== '') {
-          const query = { searchTerm, type: this.filters };
+      performSearch() {
+        if (this.searchTerm !== '') {
+          const query = { searchTerm: this.searchTerm, type: this.filters };
           this.search(query);
           console.log('albums');
           console.log(this.albumResults);
@@ -82,13 +108,14 @@
   .container {
     padding: var(--container-padding);
     display: grid;
-    min-height: calc(100vh - var(--header-height));
-    height: 100%;
+    height: calc(100vh - var(--header-height));
+    // height: 100%;
 
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 10% 90%;
     grid-template-areas:
       'search'
       'results';
+    overflow: hidden;
   }
 
   .search {
@@ -105,11 +132,25 @@
     }
 
     &__results {
+      --search-results-grid-column-scheme: 1;
+      --search-results-grid-row-scheme: repeat(3, 1fr);
+      --column-gap: normal;
+      --row-gap: 100px;
+
       grid-area: results;
       display: grid;
-      grid-template-rows: 1fr;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      column-gap: 3%;
+      grid-template-rows: var(--search-results-grid-row-scheme);
+      column-gap: var(--column-gap);
+      row-gap: var(--row-gap);
+      overflow-y: auto;
+      grid-template-columns: var(--search-results-grid-column-scheme);
+
+      @media only screen and (min-width: map-get($breakpoints, 'lg')) {
+        --search-results-grid-column-scheme: repeat(auto-fit, minmax(100px, 30%));
+        --search-results-grid-row-scheme: 1fr;
+        --column-gap: 3%;
+        --row-gap: normal;
+      }
     }
 
     &__results-column {
@@ -135,6 +176,16 @@
 
       > *:not(:last-of-type) {
         margin-bottom: $result-items-spacing;
+      }
+    }
+
+    &__message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        font-size: 2rem;
       }
     }
   }

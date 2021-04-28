@@ -2,7 +2,7 @@
   <div id="app">
     <header class="header">
       <div class="header__logo">
-        <img src="./assets/img/app-logo.svg" alt="app logo" />
+        <img src="./assets/img/icons/app-logo.svg" alt="app logo" />
       </div>
       <h1 class="header__title">Spotifake</h1>
     </header>
@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

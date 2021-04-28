@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="login-logo" alt="login logo" src="../assets/img/login.svg" />
+    <img class="login-logo" alt="login logo" src="../assets/img/icons/login.svg" />
     <div class="login-text">
       <p>
         Welcome! In order to use this app you need to authorize it by clicking

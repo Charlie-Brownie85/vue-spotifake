@@ -2,10 +2,7 @@
   <div class="container">
     <div class="search__controls">
       <div class="search__searchbox">
-        <SearchBox
-          v-model="searchTerm"
-          @input="performSearch"
-        />
+        <SearchBox v-model="searchTerm" @input="performSearch" />
       </div>
     </div>
     <div v-if="noResults" class="search__message">
@@ -148,6 +145,26 @@
         --search-results-grid-row-scheme: 1fr;
         --column-gap: 3%;
         --row-gap: normal;
+      }
+
+      /* width */
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: $color-spotify-black;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: $color-spotify-dark-grey;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: $color-spotify-light-grey;
       }
     }
 

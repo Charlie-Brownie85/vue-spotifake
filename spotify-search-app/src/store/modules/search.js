@@ -1,6 +1,7 @@
 import qs from 'qs';
 
 const { VUE_APP_SEARCH_ENDPOINT } = process.env;
+const SEARCH_DEFAULT_LIMIT = 20;
 
 const state = {
   results: {},
@@ -10,6 +11,7 @@ const state = {
 const mutations = {
   'SET_SEARCH_RESULTS'(state, payload) {
     state.results = JSON.parse(JSON.stringify(payload));
+    // console.log(state.results);
   },
   'SET_SEARCH_STATUS'(state, payload) {
     state.searchStatus = payload;
@@ -31,6 +33,7 @@ const actions = {
         params: {
           q: query.searchTerm,
           type: query.type.join(','),
+          limit: query.limit || SEARCH_DEFAULT_LIMIT,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { indices: false });

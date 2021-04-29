@@ -9,29 +9,22 @@
       <p>{{ searchMessage }}</p>
     </div>
     <div v-else class="search__results">
-      <div v-if="thereAreartistResults" class="search__results-column">
-        <h3>Artists</h3>
+      <div
+        v-for="subResults in results"
+        :key="subResults[0].type"
+        class="search__results-column"
+      >
+        <div class="search__results-type">
+          <h3>{{ getTypeTitle(subResults[0].type) }}</h3>
+        </div>
         <SpotifyCard
-          v-for="artist in artistResults"
-          :key="artist.id"
-          :cardInfo="artist"
+          v-for="item in subResults.slice(0, maxResults)"
+          :key="item.id"
+          :cardInfo="item"
         />
-      </div>
-      <div v-if="thereAreTrackResults" class="search__results-column">
-        <h3>Songs</h3>
-        <SpotifyCard
-          v-for="track in trackResults"
-          :key="track.id"
-          :cardInfo="track"
-        />
-      </div>
-      <div v-if="thereAreAlbumResults" class="search__results-column">
-        <h3>Albums</h3>
-        <SpotifyCard
-          v-for="album in albumResults"
-          :key="album.id"
-          :cardInfo="album"
-        />
+        <div v-if="subResults.length > maxResults" class="search__see-more">
+          <span>See more</span>
+        </div>
       </div>
     </div>
   </div>
@@ -51,15 +44,23 @@
       return {
         searchTerm: '',
         filters: ['artist', 'track', 'album'], // Thinking on enabling search filters later
+        maxResults: 8,
       };
     },
     computed: {
       ...mapGetters([
+        'searchResults',
         'searchStatus',
         'albumResults',
         'artistResults',
         'trackResults',
       ]),
+      results() {
+        const results = this.searchResults;
+        return Object.keys(results)
+          .filter((type) => results[type].items.length > 0)
+          .map((type) => results[type].items);
+      },
       thereAreAlbumResults() {
         return this.albumResults && this.albumResults.length > 0;
       },
@@ -70,12 +71,7 @@
         return this.trackResults && this.trackResults.length > 0;
       },
       noResults() {
-        return (
-          this.searchStatus !== 'SEARCHING' &&
-          !this.thereAreAlbumResults &&
-          !this.thereAreartistResults &&
-          !this.thereAreTrackResults
-        );
+        return this.searchStatus !== 'SEARCHING' && this.results.length < 1;
       },
       searchMessage() {
         return this.searchTerm === ''
@@ -87,11 +83,18 @@
       ...mapActions(['search', 'clearResults']),
       performSearch() {
         if (this.searchTerm !== '') {
-          const query = { searchTerm: this.searchTerm, type: this.filters };
+          const query = {
+            searchTerm: this.searchTerm,
+            type: this.filters,
+          };
           this.search(query);
         } else {
           this.clearResults();
         }
+      },
+      getTypeTitle(type) {
+        const newType = `${type === 'track' ? 'song' : type}s`;
+        return newType.charAt(0).toUpperCase() + newType.slice(1);
       },
     },
   };
@@ -168,13 +171,17 @@
       }
     }
 
-    &__results-column {
+    &__results-type {
+      position: sticky;
+      top: 0;
+      background-color: $color-spotify-light-black;
+      padding-bottom: 1.7rem;
+
       h3 {
         color: $color-white;
         font-weight: bold;
         font-size: 1.1rem;
         text-align: left;
-        margin-bottom: 1.7rem;
         position: relative;
 
         &::after {
@@ -188,7 +195,9 @@
           background-color: $color-spotify-dark-grey;
         }
       }
+    }
 
+    &__results-column {
       > *:not(:last-of-type) {
         margin-bottom: $result-items-spacing;
       }
@@ -201,6 +210,21 @@
 
       p {
         font-size: 2rem;
+      }
+    }
+
+    &__see-more {
+      text-align: right;
+
+      span {
+      cursor: pointer;
+      color: $color-spotify-light-grey;
+      text-decoration: none;
+
+        &:hover {
+          color: $color-white;
+          text-decoration: underline;
+        }
       }
     }
   }

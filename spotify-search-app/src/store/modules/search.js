@@ -52,9 +52,6 @@ const actions = {
 const getters = {
   searchResults: (state) => state.results,
   searchStatus: (state) => state.searchStatus,
-  albumResults: (state) => state.results?.albums?.items || [],
-  artistResults: (state) => state.results?.artists?.items || [],
-  trackResults: (state) => state.results?.tracks?.items || [],
 };
 
 export default {

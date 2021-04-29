@@ -9,36 +9,24 @@
       <p>{{ searchMessage }}</p>
     </div>
     <div v-else class="search__results">
-      <div
+      <ResultsPanel
         v-for="subResults in results"
         :key="subResults[0].type"
-        class="search__results-column"
-      >
-        <div class="search__results-type">
-          <h3>{{ getTypeTitle(subResults[0].type) }}</h3>
-        </div>
-        <SpotifyCard
-          v-for="item in subResults.slice(0, maxResults)"
-          :key="item.id"
-          :cardInfo="item"
-        />
-        <div v-if="subResults.length > maxResults" class="search__see-more">
-          <span>See more</span>
-        </div>
-      </div>
+        :results="subResults"
+      />
     </div>
   </div>
 </template>
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
-  import SpotifyCard from './SpotifyCard';
   import SearchBox from './SearchBox';
+  import ResultsPanel from './ResultsPanel';
 
   export default {
     components: {
-      SpotifyCard,
       SearchBox,
+      ResultsPanel,
     },
     data() {
       return {
@@ -48,27 +36,12 @@
       };
     },
     computed: {
-      ...mapGetters([
-        'searchResults',
-        'searchStatus',
-        'albumResults',
-        'artistResults',
-        'trackResults',
-      ]),
+      ...mapGetters(['searchResults', 'searchStatus']),
       results() {
         const results = this.searchResults;
         return Object.keys(results)
           .filter((type) => results[type].items.length > 0)
           .map((type) => results[type].items);
-      },
-      thereAreAlbumResults() {
-        return this.albumResults && this.albumResults.length > 0;
-      },
-      thereAreartistResults() {
-        return this.artistResults && this.artistResults.length > 0;
-      },
-      thereAreTrackResults() {
-        return this.trackResults && this.trackResults.length > 0;
       },
       noResults() {
         return this.searchStatus !== 'SEARCHING' && this.results.length < 1;
@@ -92,17 +65,11 @@
           this.clearResults();
         }
       },
-      getTypeTitle(type) {
-        const newType = `${type === 'track' ? 'song' : type}s`;
-        return newType.charAt(0).toUpperCase() + newType.slice(1);
-      },
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  $result-items-spacing: 20px;
-
   .container {
     padding: var(--container-padding);
     display: grid;
@@ -171,38 +138,6 @@
       }
     }
 
-    &__results-type {
-      position: sticky;
-      top: 0;
-      background-color: $color-spotify-light-black;
-      padding-bottom: 1.7rem;
-
-      h3 {
-        color: $color-white;
-        font-weight: bold;
-        font-size: 1.1rem;
-        text-align: left;
-        position: relative;
-
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          left: 0;
-          bottom: -10px;
-          width: 100%;
-          height: 1px;
-          background-color: $color-spotify-dark-grey;
-        }
-      }
-    }
-
-    &__results-column {
-      > *:not(:last-of-type) {
-        margin-bottom: $result-items-spacing;
-      }
-    }
-
     &__message {
       display: flex;
       justify-content: center;
@@ -210,21 +145,6 @@
 
       p {
         font-size: 2rem;
-      }
-    }
-
-    &__see-more {
-      text-align: right;
-
-      span {
-      cursor: pointer;
-      color: $color-spotify-light-grey;
-      text-decoration: none;
-
-        &:hover {
-          color: $color-white;
-          text-decoration: underline;
-        }
       }
     }
   }

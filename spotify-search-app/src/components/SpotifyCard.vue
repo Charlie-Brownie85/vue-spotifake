@@ -1,6 +1,9 @@
 <template>
   <div class="spotify-card">
-    <div class="spotify-card__picture">
+    <div
+      class="spotify-card__picture"
+      :class="{ 'spotify-card__picture--round': cardType === 'artist' }"
+    >
       <img :src="imageURL" alt="placeholder" />
     </div>
     <div class="spotify-card__info">
@@ -26,9 +29,12 @@
     },
     computed: {
       imageURL() {
-        return (this.cardType === 'track'
-          ? this.cardInfo.album?.images[1]?.url
-          : this.cardInfo.images[1]?.url) || require('../assets/img/img-placeholder.jpg');
+        return (
+          (this.cardType === 'track'
+            ? this.cardInfo.album?.images[1]?.url
+            : this.cardInfo.images[1]?.url) ||
+          require('../assets/img/img-placeholder.jpg')
+        );
       },
       cardSubtitle() {
         let subtitleText = '';
@@ -78,7 +84,10 @@
         display: block;
         height: 100%;
         object-fit: cover;
-        // object-position: center center;
+      }
+
+      &--round img {
+        clip-path: circle(40% at center);
       }
     }
 

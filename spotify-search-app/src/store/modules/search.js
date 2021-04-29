@@ -1,39 +1,43 @@
 import qs from 'qs';
 
 const { VUE_APP_SEARCH_ENDPOINT } = process.env;
-const SEARCH_DEFAULT_LIMIT = 20;
 
 const state = {
   results: {},
   searchStatus: 'DONE',
+  searchTerm: '',
 };
 
 const mutations = {
   'SET_SEARCH_RESULTS'(state, payload) {
     state.results = JSON.parse(JSON.stringify(payload));
-    // console.log(state.results);
   },
   'SET_SEARCH_STATUS'(state, payload) {
     state.searchStatus = payload;
   },
+  'SET_SEARCH_TERM'(state, payload) {
+    state.searchTerm = payload;
+  },
   'CLEAR_SEARCH_RESULTS'(state) {
     state.results = {};
+    state.searchTerm = '';
   }
 };
 
 const actions = {
-  async search({ commit }, query) {
+  async search({ commit, getters }, query) {
     try {
       commit('SET_SEARCH_STATUS', 'SEARCHING');
+      commit('SET_SEARCH_TERM', query.searchTerm);
       const res = await this._vm.$http.get(VUE_APP_SEARCH_ENDPOINT, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         params: {
-          q: query.searchTerm,
-          type: query.type.join(','),
-          limit: query.limit || SEARCH_DEFAULT_LIMIT,
+          q: getters.searchTerm,
+          type: query.type,
+          offset: query.offset || 0,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { indices: false });
@@ -52,6 +56,7 @@ const actions = {
 const getters = {
   searchResults: (state) => state.results,
   searchStatus: (state) => state.searchStatus,
+  searchTerm: (state) => state.searchTerm,
 };
 
 export default {

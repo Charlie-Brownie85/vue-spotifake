@@ -1,15 +1,15 @@
 <template>
   <div class="results">
     <div class="results__type">
-      <h3>{{ getTypeTitle(results[0].type) }}</h3>
+      <h3>{{ typeTitle }}</h3>
     </div>
     <SpotifyCard
-      v-for="item in results.slice(0, maxResults)"
+      v-for="item in results"
       :key="item.id"
       :cardInfo="item"
     />
-    <div v-if="results.length > maxResults" class="results__see-more">
-      <span>See more</span>
+    <div v-if="showSeeMore" class="results__see-more">
+      <span @click="seeMoreClicked">See more</span>
     </div>
   </div>
 </template>
@@ -26,16 +26,24 @@
         type: Array,
         required: true,
       },
-      maxResults: {
-        type: Number,
-        default: 8,
+      showSeeMore: {
+        type: Boolean,
+        default: false,
+      }
+    },
+    computed: {
+      type() {
+        return this.results[0]?.type || '';
       },
+      typeTitle() {
+        const typeTitle = this.type ? `${this.type === 'track' ? 'song' : this.type}s` : '';
+        return typeTitle.charAt(0).toUpperCase() + typeTitle.slice(1);
+      }
     },
     methods: {
-      getTypeTitle(type) {
-        const newType = `${type === 'track' ? 'song' : type}s`;
-        return newType.charAt(0).toUpperCase() + newType.slice(1);
-      },
+      seeMoreClicked() {
+        this.$emit('see-more', this.type);
+      }
     }
   };
 </script>
@@ -53,6 +61,7 @@ $result-items-spacing: 20px;
       top: 0;
       background-color: $color-spotify-light-black;
       padding-bottom: 1.7rem;
+      z-index: 999;
 
       h3 {
         color: $color-white;

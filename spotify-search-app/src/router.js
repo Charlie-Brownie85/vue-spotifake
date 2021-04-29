@@ -3,6 +3,7 @@ import store from './store/store';
 import Login from './components/Login.vue';
 import SearchPanel from './components/SearchPanel.vue';
 import RedirectPage from './components/RedirectPage.vue';
+import MoreResultsPage from './components/MoreResultsPage.vue';
 
 const routes = [
   {
@@ -23,6 +24,15 @@ const routes = [
     path: '/search',
     name: 'search',
     component: SearchPanel,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/results/:type',
+    name: 'results',
+    component: MoreResultsPage,
+    props: true,
     meta: {
       requiresAuth: true
     }

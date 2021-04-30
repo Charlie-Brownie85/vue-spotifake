@@ -1,5 +1,5 @@
 <template>
-  <div class="spotify-card">
+  <div class="spotify-card" @click="handleCardClick">
     <div
       class="spotify-card__picture"
       :class="{ 'spotify-card__picture--round': cardType === 'artist' }"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   export default {
     props: {
       cardInfo: {
@@ -54,6 +55,15 @@
             subtitleText = '';
         }
         return subtitleText;
+      },
+    },
+    methods: {
+      ...mapActions(['diplayToaster']),
+      handleCardClick() {
+        // TODO: this should navigate to the individual item page to show its details, but that's too much and I think
+        // it's out of scope of this code challenge. Could be fun for further extensions though :)
+        //! Instead it will display a small toaster of "feature not available yet"
+        this.diplayToaster();
       },
     },
   };

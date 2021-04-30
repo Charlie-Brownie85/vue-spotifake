@@ -93,6 +93,7 @@
     }
 
     input {
+      display: block;
       outline: none;
       box-shadow: none;
       text-shadow: none;

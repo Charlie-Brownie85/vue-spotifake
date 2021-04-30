@@ -61,7 +61,7 @@ $result-items-spacing: 20px;
       top: 0;
       background-color: $color-spotify-light-black;
       padding-bottom: 1.7rem;
-      z-index: 999;
+      z-index: 800;
 
       h3 {
         color: $color-white;

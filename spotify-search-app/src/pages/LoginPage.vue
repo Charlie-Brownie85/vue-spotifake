@@ -16,7 +16,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import SpotifyButton from "./SpotifyButton";
+import SpotifyButton from "../components/SpotifyButton";
 
 export default {
   name: "Login",

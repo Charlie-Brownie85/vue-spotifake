@@ -1,9 +1,9 @@
 import VueRouter from 'vue-router';
 import store from './store/store';
-import Login from './components/Login.vue';
-import SearchPanel from './components/SearchPanel.vue';
-import RedirectPage from './components/RedirectPage.vue';
-import MoreResultsPage from './components/MoreResultsPage.vue';
+import LoginPage from './pages/LoginPage.vue';
+import SearchPage from './pages/SearchPage.vue';
+import RedirectPage from './pages/RedirectPage.vue';
+import MoreResultsPage from './pages/MoreResultsPage.vue';
 
 const routes = [
   {
@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: LoginPage
   },
   {
     path: '/redirect',
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/search',
     name: 'search',
-    component: SearchPanel,
+    component: SearchPage,
     meta: {
       requiresAuth: true
     }

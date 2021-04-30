@@ -22,7 +22,7 @@
 <script>
   import { mapActions, mapGetters } from 'vuex';
   import router from '../router';
-  import ResultsPanel from './ResultsPanel';
+  import ResultsPanel from '../components/ResultsPanel';
 
   export default {
     components: {

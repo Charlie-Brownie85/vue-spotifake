@@ -22,8 +22,8 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
-  import SearchBox from './SearchBox';
-  import ResultsPanel from './ResultsPanel';
+  import SearchBox from '../components/SearchBox';
+  import ResultsPanel from '../components/ResultsPanel';
   import router from '../router';
 
   export default {
@@ -69,7 +69,6 @@
         }
       },
       seeMore(type) {
-        console.log('see more!! ', type);
         router.push({ name: 'results', params: { type } });
       }
     },

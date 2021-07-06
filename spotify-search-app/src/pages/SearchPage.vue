@@ -22,6 +22,7 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
+  import debounce from 'lodash.debounce';
   import SearchBox from '../components/SearchBox';
   import ResultsPanel from '../components/ResultsPanel';
   import router from '../router';
@@ -57,7 +58,7 @@
     },
     methods: {
       ...mapActions(['search', 'clearResults']),
-      performSearch() {
+      performSearch: debounce( function() {
         if (this.searchTerm !== '') {
           const query = {
             searchTerm: this.searchTerm,
@@ -67,7 +68,7 @@
         } else {
           this.clearResults();
         }
-      },
+      }, 200),
       seeMore(type) {
         router.push({ name: 'results', params: { type } });
       }

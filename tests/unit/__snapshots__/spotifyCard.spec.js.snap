@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotifyCard matches the snapshot 1`] = `
+<div class="spotify-card">
+  <div class="spotify-card__picture spotify-card__picture--round"><img src="https://i.scdn.co/image/ab67616100005174b506164c3174bb7123a41424" alt="placeholder"></div>
+  <div class="spotify-card__info"><span class="spotify-card__title">Muse</span> <span class="spotify-card__subtitle">6510144 followers</span></div>
+</div>
+`;

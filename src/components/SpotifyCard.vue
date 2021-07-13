@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions } from 'vuex'
   export default {
     props: {
       cardInfo: {
@@ -26,7 +26,7 @@
       return {
         cardType: this.cardInfo.type,
         cardTitle: this.cardInfo.name,
-      };
+      }
     },
     computed: {
       imageURL() {
@@ -35,26 +35,26 @@
             ? this.cardInfo.album?.images[1]?.url
             : this.cardInfo.images[1]?.url) ||
           require('../assets/img/img-placeholder.jpg')
-        );
+        )
       },
       cardSubtitle() {
-        let subtitleText = '';
+        let subtitleText = ''
         switch (this.cardType) {
           case 'album':
-            subtitleText = this.cardInfo.artists[0]?.name;
-            break;
+            subtitleText = this.cardInfo.artists[0]?.name
+            break
           case 'track':
             subtitleText = this.cardInfo.artists
               .map((artist) => artist.name)
-              .join(', ');
-            break;
+              .join(', ')
+            break
           case 'artist':
-            subtitleText = `${this.cardInfo.followers?.total} followers`;
-            break;
+            subtitleText = `${this.cardInfo.followers?.total} followers`
+            break
           default:
-            subtitleText = '';
+            subtitleText = ''
         }
-        return subtitleText;
+        return subtitleText
       },
     },
     methods: {
@@ -63,10 +63,10 @@
         // TODO: this should navigate to the individual item page to show its details, but that's too much and I think
         // it's out of scope of this code challenge. Could be fun for further extensions though :)
         //! Instead it will display a small toaster of "feature not available yet"
-        this.diplayToaster();
+        this.diplayToaster()
       },
     },
-  };
+  }
 </script>
 
 <style lang="scss" scoped>

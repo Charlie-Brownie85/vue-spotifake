@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "axios": "^0.28.0",
+    "date-fns": "^3.3.1",
+    "path-to-regexp": "^6.2.1",
     "pinia": "^2.1.7",
     "qs": "^6.11.2",
     "vite-svg-loader": "^5.1.0",

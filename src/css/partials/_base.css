@@ -22,6 +22,11 @@ body {
   @apply text-base-900;
 }
 
+.dark body {
+  @apply bg-base-900;
+  @apply text-white;
+}
+
 
 h1,
 h2

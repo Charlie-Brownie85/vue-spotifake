@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { initAuth } from './composables/useAuth';
+
+const authState = await initAuth();
+console.log(authState);
 </script>
 
 <template>

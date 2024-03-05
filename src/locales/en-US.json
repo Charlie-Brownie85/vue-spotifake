@@ -1,3 +1,8 @@
 {
-  "Home": "Home"
+  "Authentication error": "Authentication error",
+  "Please, try again later.": "Please, try again later.",
+  "Return to search": "Return to search",
+  "Try again": "Try again",
+  "Oops! Something went wrong...": "Oops! Something went wrong...",
+  "We failed getting authentication from Spotify.": "We failed getting authentication from Spotify."
 }

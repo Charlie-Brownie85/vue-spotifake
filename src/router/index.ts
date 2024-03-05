@@ -1,24 +1,25 @@
-// import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
-// import ReviewModuleRoutes from '@/modules/Review/routes';
+import SearchModuleRoutes from '@/modules/Search/routes';
 
-// const routes: RouteRecordRaw[] = [
-//   {
-//     path: '/',
-//     redirect: '/sign-up',
-//   },
-//   ...ReviewModuleRoutes,
-//   {
-//     path: '/error/:errorCode?',
-//     name: 'Error',
-//     component: () => import(
-//       '@/layouts/Pages/Error.vue'
-//     ),
-//     props: true,
-//   },
-// ];
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    redirect: '/search',
+  },
+  ...SearchModuleRoutes,
+  {
+    path: '/error/:errorCode?',
+    name: 'Error',
+    component: () => import(
+      '@/pages/ErrorView.vue'
+    ),
+    props: true,
+  },
+];
 
-// export default createRouter({
-//   history: createWebHistory(),
-//   routes,
-// });
+export default createRouter({
+  history: createWebHistory(),
+  routes,
+});

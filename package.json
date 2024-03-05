@@ -16,6 +16,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@vueuse/core": "^10.9.0",
     "axios": "^0.28.0",
     "date-fns": "^3.3.1",
     "path-to-regexp": "^6.2.1",

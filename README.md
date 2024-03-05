@@ -1,9 +1,11 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Build Auth module and login flow
-- Build views and routes
-- 🍍 store
+- Dark mode
 - Migrate components
+- 🍍 store
+- Review router views (header?)
 - Review styles
-- Dark mode?
 - CI/CD and hosting the App?
+
+- ~~Build Auth module and login flow~~
+- ~~Build views and routes~~

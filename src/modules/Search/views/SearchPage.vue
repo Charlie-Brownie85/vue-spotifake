@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { initAuth } from '@/composables/useAuth';
+
+const searchTerm = ref('');
 
 await initAuth();
 </script>
@@ -10,6 +14,7 @@ await initAuth();
       Welcome to search view!
     </h1>
   </div>
+  <SearchBox v-model="searchTerm" />
 </template>
 
 <style lang="postcss" scoped>

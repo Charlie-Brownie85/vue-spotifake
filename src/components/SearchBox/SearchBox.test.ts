@@ -62,6 +62,20 @@ describe('SearchBox', () => {
     expect(getByTestId('clear-icon')).toBeInTheDocument();
   });
 
+  it('should clear input when "clear" icon is clicked', async () => {
+    const { user, getByRole, getByTestId } = setup();
+
+    const input = getByRole('textbox');
+    await user.type(input, 'test');
+
+    expect(input).toHaveValue('test');
+
+    const clearIcon = getByTestId('clear-icon');
+    await user.click(clearIcon);
+
+    expect(input).toHaveValue('');
+  });
+
   it('should emit "update:modelValue" event when input is changed', async () => {
     const { user, emitted, getByRole } = setup();
 

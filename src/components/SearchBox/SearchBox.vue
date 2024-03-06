@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import { useDark } from '@vueuse/core';
 
-const model = defineModel<string>();
+const model = defineModel<string>({ default: '' });
 
 function clear() {
   model.value = '';
@@ -34,6 +34,7 @@ const fillColor = computed(() => (isDark.value ? '#F2F2F2' : '#212121'));
       v-if="model !== ''"
       class="absolute w-[1.875rem] h-10 top-0 right-2 rounded-r-2xl rounded -b-2xl"
       @click="clear"
+      data-testid="clear-icon"
     >
       <SVGIcon
         name="close"
@@ -57,5 +58,15 @@ const fillColor = computed(() => (isDark.value ? '#F2F2F2' : '#212121'));
 
 input {
   @apply bg-base-100 dark:bg-base-700;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active,
+  &:-internal-autofill-selected,
+  &:-internal-autofill-previewed {
+      background-color: white !important;
+      -webkit-box-shadow: 0 0 0 30px #3b3b3b inset !important;
+  }
 }
 </style>

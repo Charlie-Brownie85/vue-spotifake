@@ -28,6 +28,7 @@ export default mergeConfig(
           '**/*{.,-}test.{js,cjs,mjs,ts,tsx,jsx}',
           '**/*{.,-}preset.{js,cjs,mjs,ts,tsx,jsx}',
           'src/stores/index.ts',
+          'src/router/index.ts',
           'src/App.vue',
         ],
       },

@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 
 import DarkMode from './DarkMode.vue';
 
-// const mockedUseDark = vi.fn(() => ({ value: false }));
 const mocks = vi.hoisted(() => ({
   mockedUseDark: vi.fn(() => ({ value: false })),
 }));

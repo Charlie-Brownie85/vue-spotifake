@@ -1,6 +1,11 @@
 import { fileURLToPath } from 'node:url';
 
-import { mergeConfig, defineConfig, configDefaults } from 'vitest/config';
+import {
+  mergeConfig,
+  defineConfig,
+  configDefaults,
+  coverageConfigDefaults,
+} from 'vitest/config';
 
 import viteConfig from './vite.config';
 
@@ -12,6 +17,7 @@ export default mergeConfig(
         reportsDirectory: 'coverage',
         reporter: ['text', 'json', 'html', 'lcov'],
         exclude: [
+          ...coverageConfigDefaults.exclude,
           '**/node_modules/**',
           'dist/**',
           'coverage/**',

@@ -30,7 +30,7 @@ const setup = (props = { modelValue: '' }) => ({
   }),
 });
 
-describe('ToDosList', () => {
+describe('SearchBox', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });

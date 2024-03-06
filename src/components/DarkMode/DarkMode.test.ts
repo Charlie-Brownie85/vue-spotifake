@@ -31,7 +31,7 @@ const setup = () => ({
   }),
 });
 
-describe('ToDosList', () => {
+describe('DarkMode', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });

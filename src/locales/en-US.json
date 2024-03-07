@@ -6,5 +6,6 @@
   "See more": "See more",
   "Try again": "Try again",
   "We failed getting authentication from Spotify.": "We failed getting authentication from Spotify.",
-  "{n} followers": "{n} followers"
+  "{n} followers": "{n} followers",
+  "Oops! No results found...": "😰 Oops! No results found..."
 }

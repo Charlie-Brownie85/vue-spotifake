@@ -30,7 +30,7 @@ const typeTitle = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="mb-6">
     <div class="flex justify-between mb-2">
       <h3 class="text-base-700 dark:text-base-100 font-bold text-lg text-left relative">
         {{ typeTitle }}

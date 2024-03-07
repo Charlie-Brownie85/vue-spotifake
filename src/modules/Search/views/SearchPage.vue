@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+
+import { MAXRESULTS, NO_RESULTS_MESSAGE } from '@/config/search.config';
 
 // ! remove after testing
 import {
@@ -13,26 +15,40 @@ import { initAuth } from '@/composables/useAuth';
 const searchTerm = ref('');
 
 // ! HARDCODED FOR TESTING
-// const results = ref(artistResults.artists.items.slice(0, 3));
-// const results = ref(trackResults.tracks.items.slice(0, 3));
-const results = ref(albumResults.albums.items.slice(0, 3));
+const artists = artistResults.artists.items.slice(0, 2);
+const tracks = trackResults.tracks.items.slice(0, 10);
+const albums = albumResults.albums.items.slice(0, 5);
+
+const results = [artists, tracks, albums];
+// const results = 0;
+
+const noResults = computed(() => !results.length);
 
 await initAuth();
 </script>
 
 <template>
   <div class="p-3">
-    <h1 class="text-2xl text-base-900 font-bold">
-      Welcome to search view!
-    </h1>
-  </div>
-  <div class="p-3">
     <SearchBox v-model="searchTerm" />
-    <br>
-    <ResultsPanel
-      :results="results"
-      see-more
-    />
+    <div
+      v-if="noResults"
+      class="mt-20"
+    >
+      <p class="text-center text-2xl font-bold text-base-800 dark:text-base-100">
+        {{ $t(NO_RESULTS_MESSAGE) }}
+      </p>
+    </div>
+    <div
+      v-else
+      class="mt-6"
+    >
+      <ResultsPanel
+        v-for="subResults in results"
+        :key="subResults[0].type"
+        :results="subResults.slice(0, MAXRESULTS)"
+        :see-more="subResults.length > MAXRESULTS"
+      />
+    </div>
   </div>
 </template>
 

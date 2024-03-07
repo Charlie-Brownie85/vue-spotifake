@@ -36,26 +36,26 @@ const cardSubtitle = computed(() => {
 <template>
   <div class="spotify-card">
     <div
-      class="w-full h-full overflow-hidden"
+      class="w-full h-full overflow-hidden flex justify-center p-2"
     >
       <img
         :src="imageURL"
         alt="card picture"
-        class="block h-full object-cover"
+        class="block h-full object-cover rounded-md"
         :class="{ 'circle': cardType === 'artist' }"
       >
     </div>
-    <div class="flex flex-col justify-center items-start py-[0.625rem] px-5 overflow-hidden">
+    <div class="flex flex-col justify-start items-start py-[0.625rem] px-5 overflow-hidden">
       <span class="font-bold text-lg mb-1">{{ cardTitle }}</span>
-      <span class="font-light italic text-sm text-base-500">{{ cardSubtitle }}</span>
+      <span class="font-light italic text-sm text-base-700 dark:text-base-500">{{ cardSubtitle }}</span>
     </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .spotify-card {
-  @apply bg-base-800 hover:bg-base-600 cursor-pointer w-full h-[6.25rem] grid rounded-lg;
-  grid-template-columns: 100px auto;
+  @apply bg-base-400 hover:bg-base-500 dark:bg-base-800 dark:hover:bg-base-700 cursor-pointer w-full max-w-72 grid rounded-lg;
+  grid-template-rows: 8.25rem 6.25rem;
 
   transition: background-color 0.3s ease;
 
@@ -65,7 +65,7 @@ const cardSubtitle = computed(() => {
 
   span {
     width: calc(100%);
-    @apply text-left whitespace-nowrap text-ellipsis overflow-hidden leading-2;
+    @apply text-left whitespace-nowrap text-ellipsis overflow-hidden leading-3;
   }
 }
 </style>

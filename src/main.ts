@@ -17,3 +17,6 @@ const app = createApp(App)
   .component('SVGIcon', SVGIcon);
 
 app.mount('#app');
+
+//* Mount app when router isReady
+// router.isReady().then(() => app.mount('#app'));

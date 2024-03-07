@@ -3,9 +3,9 @@ import { ref } from 'vue';
 
 // ! remove after testing
 import {
-  // trackResults,
+  trackResults,
   artistResults,
-  // albumResults,
+  albumResults,
 } from '@/__mocks__/search-results';
 
 import { initAuth } from '@/composables/useAuth';
@@ -13,22 +13,27 @@ import { initAuth } from '@/composables/useAuth';
 const searchTerm = ref('');
 
 // ! HARDCODED FOR TESTING
-const artistInfo = ref(artistResults.artists.items[0]);
-// const tracktInfo = ref(trackResults.tracks.items[0]);
-// const albumtInfo = ref(albumResults.albums.items[0]);
+// const results = ref(artistResults.artists.items.slice(0, 3));
+// const results = ref(trackResults.tracks.items.slice(0, 3));
+const results = ref(albumResults.albums.items.slice(0, 3));
 
 await initAuth();
 </script>
 
 <template>
-  <div>
+  <div class="p-3">
     <h1 class="text-2xl text-base-900 font-bold">
       Welcome to search view!
     </h1>
   </div>
-  <SearchBox v-model="searchTerm" />
-  <br>
-  <SpotiCard :item="artistInfo" />
+  <div class="p-3">
+    <SearchBox v-model="searchTerm" />
+    <br>
+    <ResultsPanel
+      :results="results"
+      see-more
+    />
+  </div>
 </template>
 
 <style lang="postcss" scoped>

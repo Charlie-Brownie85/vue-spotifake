@@ -1,3 +1,5 @@
+export type Category = 'album' | 'artist' | 'track';
+
 export type Image = {
   height: number,
   url: string,
@@ -94,7 +96,7 @@ export type Album = {
   uri: string,
 }
 
-export type ItemInfo<T extends Album | Artist | Track> = {
+export type CategoryResults<T extends Album | Artist | Track> = {
   href: string,
   items: Array<T>,
   limit: number,
@@ -102,4 +104,10 @@ export type ItemInfo<T extends Album | Artist | Track> = {
   offset: number,
   previous: string,
   total: number,
+}
+
+export type Results = {
+  albums?: CategoryResults<Album>,
+  artists?: CategoryResults<Artist>,
+  tracks?: CategoryResults<Track>,
 }

@@ -21,13 +21,14 @@ export type Track = {
   album: {
     album_type: string,
     artists: Array<SimplifiedArtist>,
-    available_markets: Array<string>,
+    available_markets?: Array<string>,
     external_urls: {
       spotify: string,
     },
     href: string,
     id: string,
     images: Array<Image>,
+    is_playable?: boolean,
     name: string,
     release_date: string,
     release_date_precision: string,
@@ -36,7 +37,7 @@ export type Track = {
     uri: string,
   },
   artists: Array<SimplifiedArtist>,
-  available_markets: Array<string>,
+  available_markets?: Array<string>,
   disc_number: number,
   duration_ms: number,
   explicit: boolean,
@@ -49,6 +50,7 @@ export type Track = {
   href: string,
   id: string,
   is_local: boolean,
+  is_playable?: boolean,
   name: string,
   popularity: number,
   preview_url: string,
@@ -62,7 +64,7 @@ export type Artist = {
     spotify: string,
   },
   followers: {
-    href: string,
+    href: string | null,
     total: number,
   },
   genres: Array<string>,
@@ -78,17 +80,18 @@ export type Artist = {
 export type Album = {
   album_type: string,
   artists: Array<SimplifiedArtist>,
-  available_markets: Array<string>,
+  available_markets?: Array<string>,
   external_urls: {
     spotify: string,
   },
   href: string,
   id: string,
   images: Array<Image>,
+  is_playable?: boolean,
   name: string,
   release_date: string,
   release_date_precision: 'day' | 'month' | 'year',
-  restrictions: {
+  restrictions?: {
     reason: 'market' | 'product' | 'explicit',
   },
   total_tracks: number,
@@ -100,9 +103,9 @@ export type CategoryResults<T extends Album | Artist | Track> = {
   href: string,
   items: Array<T>,
   limit: number,
-  next: string,
+  next: string | null,
   offset: number,
-  previous: string,
+  previous: string | null,
   total: number,
 }
 

@@ -3,19 +3,19 @@ import userEvent from '@testing-library/user-event';
 
 import SpotiCard from './SpotiCard.vue';
 
-import type { Album, Artist, Track } from '@/types/spotify';
+import type { Album, Artist, Track } from '@/declarations/spoti.types';
 
 import {
-  trackResults,
-  artistResults,
-  albumResults,
+  tracks as trackResults,
+  artists as artistResults,
+  albums as albumResults,
 } from '@/__mocks__/search-results';
 
-const artistInfo: Artist = artistResults.artists.items[0];
-const trackInfo: Track = trackResults.tracks.items[0];
-const albumInfo: Album = albumResults.albums.items[0];
+const artistInfo: Artist = artistResults.items[0];
+const trackInfo: Track = trackResults.items[0];
+const albumInfo: Album = albumResults.items[0];
 
-const setup = (props = { item: artistInfo }) => ({
+const setup = (props: { item: Artist | Album | Track } = { item: artistInfo }) => ({
   user: userEvent.setup(),
   ...render(SpotiCard, {
     global: {

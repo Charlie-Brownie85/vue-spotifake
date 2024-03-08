@@ -3,21 +3,21 @@ import userEvent from '@testing-library/user-event';
 
 import ResultsPanel from './ResultsPanel.vue';
 
-import { SpotiCard } from '@/components/SpotiCard/SpotiCard.vue';
+import SpotiCard from '@/components/SpotiCard/SpotiCard.vue';
 
-import type { Album, Artist, Track } from '@/types/spotify';
+import type { Album, Artist, Track } from '@/declarations/spoti.types';
 
 import {
-  trackResults,
-  artistResults,
-  albumResults,
+  tracks as trackResults,
+  artists as artistResults,
+  albums as albumResults,
 } from '@/__mocks__/search-results';
 
-const artists: Artist = artistResults.artists.items.slice(0, 3);
-const tracks: Track = trackResults.tracks.items.slice(0, 3);
-const albums: Album = albumResults.albums.items.slice(0, 3);
+const artists: Array<Artist> = artistResults.items.slice(0, 3);
+const tracks: Array<Track> = trackResults.items.slice(0, 3);
+const albums: Array<Album> = albumResults.items.slice(0, 3);
 
-const setup = (props = { results: artists }) => ({
+const setup = (props: { results: Array<Artist | Track | Album>, seeMore?: boolean } = { results: artists }) => ({
   user: userEvent.setup(),
   ...render(ResultsPanel, {
     global: {

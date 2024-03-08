@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import i18n from '@/i18n';
 
-import type { Album, Artist, Track } from '@/types/spotify';
+import type { Album, Artist, Track } from '@/declarations/spoti.types';
 
 const props = defineProps<{
   item: Album | Artist | Track;

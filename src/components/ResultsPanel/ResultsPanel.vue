@@ -6,7 +6,7 @@ import type {
   Artist,
   Track,
   Category,
-} from '@/types/spotify';
+} from '@/declarations/spoti.types';
 
 const props = withDefaults(
   defineProps<{

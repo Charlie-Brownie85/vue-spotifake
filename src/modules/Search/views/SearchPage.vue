@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
+import { watchDebounced } from '@vueuse/core';
+
+import { useSearchStore } from '@/modules/Search/store';
+
 import { MAXRESULTS, NO_RESULTS_MESSAGE } from '@/config/search.config';
 
 // ! remove after testing
@@ -8,11 +12,13 @@ import {
   trackResults,
   artistResults,
   albumResults,
-} from '@/__mocks__/search-results';
+} from '@/__mocks__/search-results.js';
 
 import { initAuth } from '@/composables/useAuth';
 
 const searchTerm = ref('');
+
+const { search } = useSearchStore();
 
 // ! HARDCODED FOR TESTING
 const artists = artistResults.artists.items.slice(0, 2);
@@ -20,9 +26,16 @@ const tracks = trackResults.tracks.items.slice(0, 10);
 const albums = albumResults.albums.items.slice(0, 5);
 
 const results = [artists, tracks, albums];
-// const results = 0;
 
 const noResults = computed(() => !results.length);
+
+watchDebounced(
+  searchTerm,
+  async (newSearchTerm) => {
+    await search(newSearchTerm);
+  },
+  { debounce: 200 },
+);
 
 await initAuth();
 </script>

@@ -1,2 +1,1 @@
-export * from './apiRequest';
-export * from './getApiRoute';
+export { default as apiRequest } from './apiRequest';

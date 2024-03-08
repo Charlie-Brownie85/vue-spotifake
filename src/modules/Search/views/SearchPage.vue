@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 
 import { watchDebounced } from '@vueuse/core';
 
@@ -7,27 +8,26 @@ import { useSearchStore } from '@/modules/Search/store';
 
 import { MAXRESULTS, NO_RESULTS_MESSAGE } from '@/config/search.config';
 
-// ! remove after testing
-import {
-  trackResults,
-  artistResults,
-  albumResults,
-} from '@/__mocks__/search-results.js';
-
 import { initAuth } from '@/composables/useAuth';
 
 const searchTerm = ref('');
 
-const { search } = useSearchStore();
+const searchStore = useSearchStore();
+const { search } = searchStore;
+const {
+  artistsResults,
+  tracksResults,
+  albumsResults,
 
-// ! HARDCODED FOR TESTING
-const artists = artistResults.artists.items.slice(0, 2);
-const tracks = trackResults.tracks.items.slice(0, 10);
-const albums = albumResults.albums.items.slice(0, 5);
+} = storeToRefs(searchStore);
 
-const results = [artists, tracks, albums];
+const results = computed(() => [
+  artistsResults.value,
+  tracksResults.value,
+  albumsResults.value,
+]);
 
-const noResults = computed(() => !results.length);
+const noResults = computed(() => results.value.every((subResults) => !subResults.length));
 
 watchDebounced(
   searchTerm,
@@ -57,9 +57,9 @@ await initAuth();
     >
       <ResultsPanel
         v-for="subResults in results"
-        :key="subResults[0].type"
-        :results="subResults.slice(0, MAXRESULTS)"
-        :see-more="subResults.length > MAXRESULTS"
+        :key="subResults[0]?.type"
+        :results="subResults?.slice(0, MAXRESULTS)"
+        :see-more="subResults?.length > MAXRESULTS"
       />
     </div>
   </div>

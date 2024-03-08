@@ -6,14 +6,18 @@ import { watchDebounced } from '@vueuse/core';
 
 import { useSearchStore } from '@/modules/Search/store';
 
-import { MAXRESULTS, NO_RESULTS_MESSAGE } from '@/config/search.config';
+import {
+  MAXRESULTS,
+  NO_RESULTS_MESSAGE,
+  EMPTY_SEARCH_MESSAGE,
+} from '@/config/search.config';
 
 import { initAuth } from '@/composables/useAuth';
 
 const searchTerm = ref('');
 
 const searchStore = useSearchStore();
-const { search } = searchStore;
+const { search, clearSerch } = searchStore;
 const {
   artistsResults,
   tracksResults,
@@ -32,6 +36,10 @@ const noResults = computed(() => results.value.every((subResults) => !subResults
 watchDebounced(
   searchTerm,
   async (newSearchTerm) => {
+    if (!newSearchTerm.length) {
+      clearSerch();
+      return;
+    }
     await search(newSearchTerm);
   },
   { debounce: 200 },
@@ -42,13 +50,15 @@ await initAuth();
 
 <template>
   <div class="p-3">
-    <SearchBox v-model="searchTerm" />
+    <div class="flex justify-center">
+      <SearchBox v-model="searchTerm" />
+    </div>
     <div
       v-if="noResults"
       class="mt-20"
     >
       <p class="text-center text-2xl font-bold text-base-800 dark:text-base-100">
-        {{ $t(NO_RESULTS_MESSAGE) }}
+        {{ searchTerm.length ? $t(NO_RESULTS_MESSAGE) : $t(EMPTY_SEARCH_MESSAGE) }}
       </p>
     </div>
     <div

@@ -63,4 +63,14 @@ describe('Search store', () => {
     expect(store.albumsResults).toEqual(albumResults.items);
     expect(store.tracksResults).toEqual(trackResults.items);
   });
+
+  it('should clear the search results correctly', async () => {
+    await store.search('test');
+
+    expect(store.searchResults).toEqual(results);
+
+    store.clearSerch();
+
+    expect(store.searchResults).toEqual({});
+  });
 });

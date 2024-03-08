@@ -35,11 +35,16 @@ export const useSearchStore = defineStore('search', () => {
     searchResults.value = data;
   }
 
+  function clearSerch() {
+    searchResults.value = {};
+  }
+
   return {
     searchResults,
     search,
     artistsResults,
     albumsResults,
     tracksResults,
+    clearSerch,
   };
 });

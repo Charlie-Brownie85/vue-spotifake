@@ -1,9 +1,9 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Add category views? (see more)
 - Add infinite scroll (vueUse virtual scroll)
 - Add single item view
 - Add filters
+- Optimize routes to add search query in path (and use it to reproduce search & results)
 - Add language change selector
 - Tests
 - Review router views (header?)
@@ -18,3 +18,4 @@
 - ~~🍍 store~~
 - ~~Build Auth module and login flow~~
 - ~~Build views and routes~~
+- ~~Add category views? (see more)~~

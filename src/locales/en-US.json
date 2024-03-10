@@ -1,5 +1,6 @@
 {
   "Authentication error": "Authentication error",
+  "Displaying results for: {searchTerm}": "Displaying results for: {searchTerm}",
   "Oops! No results found...": "😰 Oops! No results found...",
   "Oops! Something went wrong...": "Oops! Something went wrong...",
   "Please, try again later.": "Please, try again later.",

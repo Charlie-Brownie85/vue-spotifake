@@ -2,9 +2,13 @@
 import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import { useRouter } from 'vue-router';
+
 import { watchDebounced } from '@vueuse/core';
 
 import { useSearchStore } from '@/modules/Search/store';
+
+import type { Category } from '@/declarations/spoti.types';
 
 import {
   MAXRESULTS,
@@ -13,6 +17,8 @@ import {
 } from '@/config/search.config';
 
 import { initAuth } from '@/composables/useAuth';
+
+const router = useRouter();
 
 const searchTerm = ref('');
 
@@ -32,6 +38,10 @@ const results = computed(() => [
 ]);
 
 const noResults = computed(() => results.value.every((subResults) => !subResults.length));
+
+function seeMoreResults(category: Category) {
+  router.push({ name: 'results', params: { category } });
+}
 
 watchDebounced(
   searchTerm,
@@ -70,6 +80,7 @@ await initAuth();
         :key="subResults[0]?.type"
         :results="subResults?.slice(0, MAXRESULTS)"
         :see-more="subResults?.length > MAXRESULTS"
+        @see-more="seeMoreResults"
       />
     </div>
   </div>

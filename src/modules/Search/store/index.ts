@@ -18,6 +18,7 @@ import { DEFAULT_FILTER_VALUE } from '@/config/search.config';
 
 export const useSearchStore = defineStore('search', () => {
   const searchResults: Ref<Results> = ref<Results>({});
+  const lastSearchTerm = ref('');
 
   const artistsResults: ComputedRef<Artist[]> = computed(() => searchResults.value.artists?.items || []);
   const albumsResults: ComputedRef<Album[]> = computed(() => searchResults.value.albums?.items || []);
@@ -35,6 +36,7 @@ export const useSearchStore = defineStore('search', () => {
       },
     );
 
+    lastSearchTerm.value = q;
     searchResults.value = data;
   }
 
@@ -49,5 +51,6 @@ export const useSearchStore = defineStore('search', () => {
     albumsResults,
     tracksResults,
     clearSerch,
+    lastSearchTerm,
   };
 });

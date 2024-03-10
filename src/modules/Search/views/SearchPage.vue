@@ -11,7 +11,7 @@ import { useSearchStore } from '@/modules/Search/store';
 import type { Category } from '@/declarations/spoti.types';
 
 import {
-  MAXRESULTS,
+  DEFAULT_SEARCH_CONFIG,
   NO_RESULTS_MESSAGE,
   EMPTY_SEARCH_MESSAGE,
 } from '@/config/search.config';
@@ -19,6 +19,8 @@ import {
 import { initAuth } from '@/composables/useAuth';
 
 const router = useRouter();
+
+const { PREVIEW_MAX_RESULTS } = DEFAULT_SEARCH_CONFIG;
 
 const searchTerm = ref('');
 
@@ -78,8 +80,8 @@ await initAuth();
       <ResultsPanel
         v-for="subResults in results"
         :key="subResults[0]?.type"
-        :results="subResults?.slice(0, MAXRESULTS)"
-        :see-more="subResults?.length > MAXRESULTS"
+        :results="subResults?.slice(0, PREVIEW_MAX_RESULTS)"
+        :see-more="subResults?.length > PREVIEW_MAX_RESULTS"
         @see-more="seeMoreResults"
       />
     </div>

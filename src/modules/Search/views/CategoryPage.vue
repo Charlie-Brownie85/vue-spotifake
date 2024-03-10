@@ -11,7 +11,8 @@ const props = defineProps<{
 }>();
 
 const searchStore = useSearchStore();
-// const { search } = searchStore;
+const { searchNextPage } = searchStore;
+
 const {
   artistsResults,
   tracksResults,
@@ -26,6 +27,10 @@ const resultsDictionary = {
 };
 
 const results = computed(() => resultsDictionary[props.category].value);
+
+async function searchMore(type: Category) {
+  await searchNextPage(type);
+}
 
 </script>
 
@@ -52,7 +57,8 @@ const results = computed(() => resultsDictionary[props.category].value);
     <ResultsPanel
       :key="results[0]?.type"
       :results="results"
-      :see-more="false"
+      enable-infinite-scroll
+      :load-more-data-function="searchMore"
       class="mt-6"
     />
   </div>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
+
+import { useInfiniteScroll } from '@vueuse/core';
 
 import type {
   Album,
@@ -11,9 +13,13 @@ import type {
 const props = withDefaults(
   defineProps<{
   results: Array<Album | Artist | Track>,
+  enableInfiniteScroll?: boolean,
+  loadMoreDataFunction?:(type: Category) => void,
   seeMore?: boolean,
 }>(),
   {
+    loadMoreDataFunction: () => {},
+    useInfiniteScroll: false,
     seeMore: false,
   },
 );
@@ -22,11 +28,22 @@ const emit = defineEmits<{
   'see-more': [type: Category],
 }>();
 
+const list = ref<HTMLElement | null>(null);
+
 const type = computed(() => props.results[0]?.type);
 const typeTitle = computed(() => {
   const title = `${type.value === 'track' ? 'song' : type.value}s`;
   return title[0].toUpperCase() + title.slice(1);
 });
+
+useInfiniteScroll(
+  list,
+  async () => {
+    if (!props.enableInfiniteScroll) return;
+    await props.loadMoreDataFunction(type.value);
+  },
+  { distance: 100 },
+);
 </script>
 
 <template>
@@ -43,7 +60,11 @@ const typeTitle = computed(() => {
         {{ $t('See more') }}
       </span>
     </div>
-    <ul class="results-list">
+    <ul
+      ref="list"
+      class="results-list"
+      :class="{ 'h-[80vh] overflow-y-auto': props.enableInfiniteScroll }"
+    >
       <li
         v-for="item in props.results"
         :key="item.id"

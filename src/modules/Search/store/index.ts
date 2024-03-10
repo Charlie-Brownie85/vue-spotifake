@@ -12,9 +12,10 @@ import type {
   Album,
   Track,
   Category,
+  CategoryResults,
 } from '@/declarations/spoti.types';
 
-import { DEFAULT_FILTER_VALUE } from '@/config/search.config';
+import { DEFAULT_SEARCH_CONFIG } from '@/config/search.config';
 
 export const useSearchStore = defineStore('search', () => {
   const searchResults: Ref<Results> = ref<Results>({});
@@ -24,20 +25,61 @@ export const useSearchStore = defineStore('search', () => {
   const albumsResults: ComputedRef<Album[]> = computed(() => searchResults.value.albums?.items || []);
   const tracksResults: ComputedRef<Track[]> = computed(() => searchResults.value.tracks?.items || []);
 
-  async function search(q: string, filter?: Category) {
+  async function search(
+    q: string,
+    filter?: Category,
+    region?: string,
+    resultsPerPage?: number,
+    offset?: number,
+  ) {
+    const { FILTER_VALUE, MARKET, RESULTS_PER_PAGE } = DEFAULT_SEARCH_CONFIG;
     const { data } = await apiRequest<Results>(
       searchEndpoint,
       {
         params: {
           q,
-          type: filter || DEFAULT_FILTER_VALUE,
-          market: 'es',
+          type: filter || FILTER_VALUE,
+          market: region || MARKET,
+          limit: resultsPerPage || RESULTS_PER_PAGE,
+          offset: offset || 0,
         },
       },
     );
 
     lastSearchTerm.value = q;
     searchResults.value = data;
+  }
+
+  async function searchNextPage(filter: Category, resultsPerPage?: number) {
+    const lastCategoryResults = searchResults.value[`${filter}s`] as CategoryResults<Album | Artist | Track>;
+    const { offset: lastOffset, limit, total } = lastCategoryResults;
+
+    if (lastOffset == null || lastOffset + limit >= total) return;
+
+    const { MARKET, RESULTS_PER_PAGE } = DEFAULT_SEARCH_CONFIG;
+    const { data } = await apiRequest<Results>(
+      searchEndpoint,
+      {
+        params: {
+          q: lastSearchTerm.value,
+          type: filter,
+          market: MARKET,
+          limit: resultsPerPage || RESULTS_PER_PAGE,
+          offset: lastOffset + RESULTS_PER_PAGE,
+        },
+      },
+    );
+
+    searchResults.value = {
+      ...searchResults.value,
+      [`${filter}s`]: {
+        ...data[`${filter}s`],
+        items: [
+          ...lastCategoryResults.items,
+          ...(data[`${filter}s`]?.items as Artist[] | Album[] | Track[]) ?? [],
+        ],
+      },
+    };
   }
 
   function clearSerch() {
@@ -47,6 +89,7 @@ export const useSearchStore = defineStore('search', () => {
   return {
     searchResults,
     search,
+    searchNextPage,
     artistsResults,
     albumsResults,
     tracksResults,

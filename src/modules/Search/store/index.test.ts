@@ -4,6 +4,8 @@ import { searchEndpoint } from '../api';
 
 import { useSearchStore } from './index';
 
+import { DEFAULT_SEARCH_CONFIG } from '@/config/search.config';
+
 import {
   tracks as trackResults,
   artists as artistResults,
@@ -48,8 +50,10 @@ describe('Search store', () => {
       {
         params: {
           q: 'test',
-          type: 'album,artist,track',
-          market: 'es',
+          type: DEFAULT_SEARCH_CONFIG.FILTER_VALUE,
+          market: DEFAULT_SEARCH_CONFIG.MARKET,
+          limit: DEFAULT_SEARCH_CONFIG.RESULTS_PER_PAGE,
+          offset: 0,
         },
       },
     );
@@ -64,7 +68,9 @@ describe('Search store', () => {
         params: {
           q: 'test',
           type: 'album',
-          market: 'es',
+          market: DEFAULT_SEARCH_CONFIG.MARKET,
+          limit: DEFAULT_SEARCH_CONFIG.RESULTS_PER_PAGE,
+          offset: 0,
         },
       },
     );

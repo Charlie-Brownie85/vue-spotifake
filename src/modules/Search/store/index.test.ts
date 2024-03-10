@@ -40,7 +40,7 @@ describe('Search store', () => {
     expect(store.tracksResults).toEqual([]);
   });
 
-  it('should call the search endpoint with the correct parameters', async () => {
+  it('should call the search endpoint with the correct parameters when no filter is passed', async () => {
     await store.search('test');
 
     expect(mockedApiRequest).toHaveBeenCalledWith(
@@ -49,6 +49,21 @@ describe('Search store', () => {
         params: {
           q: 'test',
           type: 'album,artist,track',
+          market: 'es',
+        },
+      },
+    );
+  });
+
+  it('should call the search endpoint with the correct parameters when filter value is passed', async () => {
+    await store.search('test', 'album');
+
+    expect(mockedApiRequest).toHaveBeenCalledWith(
+      searchEndpoint,
+      {
+        params: {
+          q: 'test',
+          type: 'album',
           market: 'es',
         },
       },

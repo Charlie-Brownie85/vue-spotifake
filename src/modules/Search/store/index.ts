@@ -11,7 +11,10 @@ import type {
   Artist,
   Album,
   Track,
+  Category,
 } from '@/declarations/spoti.types';
+
+import { DEFAULT_FILTER_VALUE } from '@/config/search.config';
 
 export const useSearchStore = defineStore('search', () => {
   const searchResults: Ref<Results> = ref<Results>({});
@@ -20,13 +23,13 @@ export const useSearchStore = defineStore('search', () => {
   const albumsResults: ComputedRef<Album[]> = computed(() => searchResults.value.albums?.items || []);
   const tracksResults: ComputedRef<Track[]> = computed(() => searchResults.value.tracks?.items || []);
 
-  async function search(q: string) {
+  async function search(q: string, filter?: Category) {
     const { data } = await apiRequest<Results>(
       searchEndpoint,
       {
         params: {
           q,
-          type: 'album,artist,track',
+          type: filter || DEFAULT_FILTER_VALUE,
           market: 'es',
         },
       },

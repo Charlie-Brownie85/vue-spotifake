@@ -8,19 +8,20 @@ import type {
   Artist,
   Track,
   Category,
+  CategoryResults,
 } from '@/declarations/spoti.types';
 
 const props = withDefaults(
   defineProps<{
-  results: Array<Album | Artist | Track>,
+  results: CategoryResults<Album | Artist | Track>,
   enableInfiniteScroll?: boolean,
   loadMoreDataFunction?:(type: Category) => void,
-  seeMore?: boolean,
+  maxResults?: number | null,
 }>(),
   {
     loadMoreDataFunction: () => {},
-    useInfiniteScroll: false,
-    seeMore: false,
+    enableInfiniteScroll: false,
+    maxResults: null,
   },
 );
 
@@ -30,17 +31,34 @@ const emit = defineEmits<{
 
 const list = ref<HTMLElement | null>(null);
 
-const type = computed(() => props.results[0]?.type);
+const loadingMore = ref(false);
+
+const resultsItems = computed(() => {
+  if (!props.results?.items.length) return [];
+  if (props.maxResults === null) return props.results?.items || [];
+  return props.results?.items.slice(0, props.maxResults);
+});
+
+const displaySeeMore = computed(() => {
+  if (props.maxResults === null) return false;
+  return props.results.items?.length > props.maxResults;
+});
+
+const type = computed(() => resultsItems.value[0]?.type);
 const typeTitle = computed(() => {
   const title = `${type.value === 'track' ? 'song' : type.value}s`;
   return title[0].toUpperCase() + title.slice(1);
 });
 
+const areThereMoreResults = computed(() => !!props.results?.next);
+
 useInfiniteScroll(
   list,
   async () => {
-    if (!props.enableInfiniteScroll) return;
+    if (!props.enableInfiniteScroll || !areThereMoreResults.value) return;
+    loadingMore.value = true;
     await props.loadMoreDataFunction(type.value);
+    loadingMore.value = false;
   },
   { distance: 100 },
 );
@@ -53,7 +71,7 @@ useInfiniteScroll(
         {{ typeTitle }}
       </h3>
       <span
-        v-if="seeMore"
+        v-if="displaySeeMore"
         class="text-right cursor-pointer text-base-600 dark:text-base-500 hover:underline dark:hover:text-base-100"
         @click="emit('see-more', type)"
       >
@@ -66,11 +84,17 @@ useInfiniteScroll(
       :class="{ 'h-[80vh] overflow-y-auto': props.enableInfiniteScroll }"
     >
       <li
-        v-for="item in props.results"
+        v-for="item in resultsItems"
         :key="item.id"
       >
         <SpotiCard :item="item" />
       </li>
+      <div
+        v-if="loadingMore"
+        class="flex justify-center items-center mt-6"
+      >
+        <span class="block loader" />
+      </div>
     </ul>
   </div>
 </template>

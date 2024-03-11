@@ -2,7 +2,13 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import type { Category } from '@/declarations/spoti.types';
+import type {
+  Album,
+  Artist,
+  Track,
+  Category,
+  CategoryResults,
+} from '@/declarations/spoti.types';
 
 import { useSearchStore } from '@/modules/Search/store';
 
@@ -55,8 +61,8 @@ async function searchMore(type: Category) {
       </h2>
     </div>
     <ResultsPanel
-      :key="results[0]?.type"
-      :results="results"
+      :key="(results as CategoryResults<Album | Artist | Track>)?.items[0]?.type"
+      :results="(results as CategoryResults<Album | Artist | Track>)"
       enable-infinite-scroll
       :load-more-data-function="searchMore"
       class="mt-6"

@@ -21,9 +21,9 @@ export const useSearchStore = defineStore('search', () => {
   const searchResults: Ref<Results> = ref<Results>({});
   const lastSearchTerm = ref('');
 
-  const artistsResults: ComputedRef<Artist[]> = computed(() => searchResults.value.artists?.items || []);
-  const albumsResults: ComputedRef<Album[]> = computed(() => searchResults.value.albums?.items || []);
-  const tracksResults: ComputedRef<Track[]> = computed(() => searchResults.value.tracks?.items || []);
+  const artistsResults: ComputedRef<CategoryResults<Artist> | {} > = computed(() => searchResults.value.artists || {});
+  const albumsResults: ComputedRef<CategoryResults<Album> | {}> = computed(() => searchResults.value.albums || {});
+  const tracksResults: ComputedRef<CategoryResults<Track> | {}> = computed(() => searchResults.value.tracks || {});
 
   async function search(
     q: string,

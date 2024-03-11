@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
+import type { ComputedRef } from 'vue';
+
 import { storeToRefs } from 'pinia';
 
 import { useRouter } from 'vue-router';
@@ -8,7 +10,13 @@ import { watchDebounced } from '@vueuse/core';
 
 import { useSearchStore } from '@/modules/Search/store';
 
-import type { Category } from '@/declarations/spoti.types';
+import type {
+  Album,
+  Artist,
+  Track,
+  Category,
+  CategoryResults,
+} from '@/declarations/spoti.types';
 
 import {
   DEFAULT_SEARCH_CONFIG,
@@ -30,16 +38,17 @@ const {
   artistsResults,
   tracksResults,
   albumsResults,
-
 } = storeToRefs(searchStore);
 
-const results = computed(() => [
-  artistsResults.value,
-  tracksResults.value,
-  albumsResults.value,
+const results = reactive([
+  artistsResults as ComputedRef<CategoryResults<Artist>>,
+  tracksResults as ComputedRef<CategoryResults<Track>>,
+  albumsResults as ComputedRef<CategoryResults<Album>>,
 ]);
 
-const noResults = computed(() => results.value.every((subResults) => !subResults.length));
+const noResults = computed(
+  () => results.every((subResults) => !subResults.value?.items?.length),
+);
 
 function seeMoreResults(category: Category) {
   router.push({ name: 'results', params: { category } });
@@ -79,9 +88,9 @@ await initAuth();
     >
       <ResultsPanel
         v-for="subResults in results"
-        :key="subResults[0]?.type"
-        :results="subResults?.slice(0, PREVIEW_MAX_RESULTS)"
-        :see-more="subResults?.length > PREVIEW_MAX_RESULTS"
+        :key="subResults.value.items[0]?.type"
+        :results="subResults.value"
+        :max-results="PREVIEW_MAX_RESULTS"
         @see-more="seeMoreResults"
       />
     </div>

@@ -1,7 +1,6 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
 - Fix navigation between results!! KeepAlive?
-- Improve styles of results panel for infinite scroll (scrollbar and loader spinner?)
 - Add back to top
 - Add single item view
 - Optimize routes to add search query in path (and use it to reproduce search & results)
@@ -22,3 +21,4 @@
 - ~~Build views and routes~~
 - ~~Add category views? (see more)~~
 - ~~Add infinite scroll (vueUse virtual scroll)~~
+- ~~Improve styles of results panel for infinite scroll (scrollbar and loader spinner?)~~

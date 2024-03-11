@@ -5,19 +5,38 @@ import ResultsPanel from './ResultsPanel.vue';
 
 import SpotiCard from '@/components/SpotiCard/SpotiCard.vue';
 
-import type { Album, Artist, Track } from '@/declarations/spoti.types';
+import type {
+  Album,
+  Artist,
+  Track,
+  CategoryResults,
+} from '@/declarations/spoti.types';
 
 import {
-  tracks as trackResults,
-  artists as artistResults,
-  albums as albumResults,
+  tracks,
+  artists,
+  albums,
 } from '@/__mocks__/search-results';
 
-const artists: Array<Artist> = artistResults.items.slice(0, 3);
-const tracks: Array<Track> = trackResults.items.slice(0, 3);
-const albums: Array<Album> = albumResults.items.slice(0, 3);
+const artistResults: CategoryResults<Artist> = {
+  ...artists,
+  items: artists.items.slice(0, 5),
+};
+const albumResults: CategoryResults<Album> = {
+  ...albums,
+  items: albums.items.slice(0, 5),
+};
+const trackResults: CategoryResults<Track> = {
+  ...tracks,
+  items: tracks.items.slice(0, 5),
+};
 
-const setup = (props: { results: Array<Artist | Track | Album>, seeMore?: boolean } = { results: artists }) => ({
+const setup = (props: {
+  results: CategoryResults<Artist | Track | Album>,
+  maxResults?: number | null,
+  enableInfiniteScroll?: boolean,
+  loadMoreDataFunction?: () => void,
+} = { results: artistResults }) => ({
   user: userEvent.setup(),
   ...render(ResultsPanel, {
     global: {
@@ -42,7 +61,7 @@ describe('ResultsPanel', () => {
 
     const cards = getAllByRole('listitem');
 
-    expect(cards).toHaveLength(artists.length);
+    expect(cards).toHaveLength(artistResults.items.length);
   });
 
   it('should render the correct category title when artists info is provided', () => {
@@ -54,7 +73,7 @@ describe('ResultsPanel', () => {
   });
 
   it('should render the correct category title when albums info is provided', () => {
-    const { getByText } = setup({ results: albums });
+    const { getByText } = setup({ results: albumResults });
 
     const title = getByText('Albums');
 
@@ -62,7 +81,7 @@ describe('ResultsPanel', () => {
   });
 
   it('should render the correct category title when tracks info is provided', () => {
-    const { getByText } = setup({ results: tracks });
+    const { getByText } = setup({ results: trackResults });
 
     const title = getByText('Songs');
 
@@ -75,17 +94,27 @@ describe('ResultsPanel', () => {
     expect(queryByText('See more')).not.toBeInTheDocument();
   });
 
-  it('should render "See more" when requested', () => {
-    const { getByText } = setup({ results: tracks, seeMore: true });
+  it('should render "See more" when results are greater than property "maxResults" value provided', () => {
+    const { getByText } = setup({ results: trackResults, maxResults: 3 });
 
     expect(getByText('See more')).toBeInTheDocument();
   });
 
   it('should emit event of type "see-more" containing the category when clicked "See more" text', async () => {
-    const { getByText, user, emitted } = setup({ results: tracks, seeMore: true });
+    const { getByText, user, emitted } = setup({ results: trackResults, maxResults: 3 });
 
     await user.click(getByText('See more'));
 
     expect(emitted('see-more')).toEqual([['track']]);
+  });
+
+  it('should display all results when no max is provided', async () => {
+    const { getAllByRole } = setup({
+      results: tracks,
+    });
+
+    const cards = getAllByRole('listitem');
+
+    expect(cards).toHaveLength(tracks.items.length);
   });
 });

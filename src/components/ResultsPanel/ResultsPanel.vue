@@ -82,6 +82,7 @@ useInfiniteScroll(
       ref="list"
       class="results-list"
       :class="{ 'h-[80vh] overflow-y-auto': props.enableInfiniteScroll }"
+      data-testid="results-list"
     >
       <li
         v-for="item in resultsItems"

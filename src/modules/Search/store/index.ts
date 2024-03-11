@@ -65,7 +65,7 @@ export const useSearchStore = defineStore('search', () => {
           type: filter,
           market: MARKET,
           limit: resultsPerPage || RESULTS_PER_PAGE,
-          offset: lastOffset + RESULTS_PER_PAGE,
+          offset: lastOffset + (resultsPerPage || RESULTS_PER_PAGE),
         },
       },
     );

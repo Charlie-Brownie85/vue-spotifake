@@ -76,6 +76,7 @@ useInfiniteScroll(
 </template>
 
 <style lang="postcss" scoped>
+
 .results-list {
   @apply grid gap-3;
   grid-template-columns: repeat(auto-fit, minmax(9.375rem, 1fr));

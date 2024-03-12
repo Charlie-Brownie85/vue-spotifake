@@ -1,6 +1,7 @@
 const colors = {
   base: {
     100: '#FAFAFA',
+    200: '#F8F8F8',
     300: '#F2F2F2',
     400: '#D9D9D9',
     500: '#b3b3b3',

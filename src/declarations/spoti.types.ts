@@ -17,6 +17,38 @@ export type SimplifiedArtist = {
   uri: string,
 }
 
+export type SimplifiedTrack = {
+  artists: Array<SimplifiedArtist>,
+  available_markets: Array<string>,
+  disc_number: number,
+  duration_ms: number,
+  explicit: boolean,
+  external_urls: {
+    spotify: string,
+  },
+  href: string,
+  id: string,
+  is_playable: boolean,
+  linked_from: {
+    external_urls: {
+      spotify: string,
+    },
+    href: string,
+    id: string,
+    type: string,
+    uri: string,
+  },
+  restrictions: {
+    reason: string,
+  },
+  name: string,
+  preview_url: string,
+  track_number: number,
+  type: string,
+  uri: string,
+  is_local: boolean,
+}
+
 export type Track = {
   album: {
     album_type: string,
@@ -113,4 +145,20 @@ export type Results = {
   albums?: CategoryResults<Album>,
   artists?: CategoryResults<Artist>,
   tracks?: CategoryResults<Track>,
+}
+
+export type AlbumDetails = Album & {
+  tracks: {
+    href: string,
+    limit: number,
+    next: string | null,
+    offset: number,
+    previous: string | null,
+    total: number,
+    items: Array<SimplifiedTrack>,
+  },
+  copyrights?: Array<Object>,
+  genres: Array<string>,
+  label: string,
+  popularity: number,
 }

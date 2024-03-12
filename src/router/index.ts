@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 
 import SearchModuleRoutes from '@/modules/Search/routes';
+import ItemDetailsModuleRoutes from '@/modules/ItemDetails/routes';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,6 +10,7 @@ const routes: RouteRecordRaw[] = [
     redirect: '/search',
   },
   ...SearchModuleRoutes,
+  ...ItemDetailsModuleRoutes,
   {
     path: '/error/:errorCode?',
     name: 'Error',

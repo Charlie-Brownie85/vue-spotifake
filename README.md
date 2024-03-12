@@ -1,14 +1,14 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Fix navigation between results!! KeepAlive?
-- Add back to top
 - Add single item view
 - Optimize routes to add search query in path (and use it to reproduce search & results)
 - Add filters
+- Add back to top
 - Add language change selector
 - Tests
 - Review router views (header?)
 - Add skeleton
+- Fix navigation between results!! KeepAlive?
 - Add last search and display it when input is empty?
 - Review styles
 - Optimize useAuth (local store token to avoid unnecessary auth requests?)

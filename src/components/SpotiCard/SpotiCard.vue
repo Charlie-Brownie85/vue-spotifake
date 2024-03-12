@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 import i18n from '@/i18n';
 
@@ -9,6 +10,7 @@ const props = defineProps<{
   item: Album | Artist | Track;
 }>();
 
+const router = useRouter();
 const { t } = i18n.global;
 
 const { type: cardType, name: cardTitle } = props.item;
@@ -31,10 +33,23 @@ const cardSubtitle = computed(() => {
         return '';
   }
 });
+
+function goToDetailsView() {
+  router.push({
+    name: 'ItemDetails',
+    params: {
+      id: props.item.id,
+      type: cardType,
+    },
+  });
+}
 </script>
 
 <template>
-  <div class="spotify-card">
+  <div
+    class="spotify-card"
+    @click="goToDetailsView"
+  >
     <div
       class="w-full h-full overflow-hidden flex justify-center p-2"
     >

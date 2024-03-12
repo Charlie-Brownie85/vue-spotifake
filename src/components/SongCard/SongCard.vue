@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 
+import { useRouter } from 'vue-router';
+
 import type { Track } from '@/declarations/spoti.types';
 
 import { useDetailsStore } from '@/modules/ItemDetails/store';
@@ -12,6 +14,8 @@ const props = defineProps<{
   id: string,
 }>();
 
+const router = useRouter();
+
 const { fetchTrack } = useDetailsStore();
 
 async function fetchTrackDetails() {
@@ -19,6 +23,16 @@ async function fetchTrackDetails() {
 }
 
 const track: Ref<Track> = ref(await fetchTrackDetails());
+
+function goToDetailsView(type: string, id: string) {
+  router.push({
+    name: 'ItemDetails',
+    params: {
+      type,
+      id,
+    },
+  });
+}
 </script>
 
 <template>
@@ -42,10 +56,16 @@ const track: Ref<Track> = ref(await fetchTrackDetails());
             {{ getSongDuration(track?.duration_ms) }}
           </span>
         </h2>
-        <span class="block w-full font-bold text-lg text-base-900 dark:text-base-200 mb-1">
+        <span
+          class="block w-full font-bold text-lg text-base-900 dark:text-base-200 cursor-pointer hover:underline mb-1"
+          @click="goToDetailsView('artist', track?.artists[0].id)"
+        >
           {{ track.artists[0].name }}
         </span>
-        <span class="block w-full font-normal text-lg text-base-700 dark:text-base-500 mb-1">
+        <span
+          class="block w-full font-normal text-lg text-base-700 dark:text-base-500 cursor-pointer hover:underline mb-1"
+          @click="goToDetailsView('album', track?.album.id)"
+        >
           {{ track.album.name }}
         </span>
       </div>

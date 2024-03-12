@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 
+import { useRouter } from 'vue-router';
+
 import type { AlbumDetails } from '@/declarations/spoti.types';
 
 import { useDetailsStore } from '@/modules/ItemDetails/store';
@@ -12,6 +14,8 @@ const props = defineProps<{
   id: string,
 }>();
 
+const router = useRouter();
+
 const { fetchAlbum } = useDetailsStore();
 
 async function fetchAlbumDetails() {
@@ -19,6 +23,16 @@ async function fetchAlbumDetails() {
 }
 
 const album: Ref<AlbumDetails> = ref(await fetchAlbumDetails());
+
+function goToDetailsView(type: string, id: string) {
+  router.push({
+    name: 'ItemDetails',
+    params: {
+      type,
+      id,
+    },
+  });
+}
 </script>
 
 <template>
@@ -41,7 +55,12 @@ const album: Ref<AlbumDetails> = ref(await fetchAlbumDetails());
           new Date(album?.release_date).getFullYear()
         }}</span>
       </h2>
-      <span class="font-bold text-lg text-base-700 dark:text-base-500 mb-1">{{ album?.artists[0]?.name }}</span>
+      <span
+        class="font-bold text-lg text-base-700 dark:text-base-500 cursor-pointer hover:underline mb-1"
+        @click="goToDetailsView('artist', album?.artists[0]?.id)"
+      >
+        {{ album?.artists[0]?.name }}
+      </span>
     </div>
     <div class="flex justify-center">
       <ul class="px-8 w-full max-w-[50rem]">

@@ -29,7 +29,7 @@ const album: Ref<AlbumDetails> = ref(await fetchAlbumDetails());
       <img
         :src="album?.images[1]?.url"
         alt="album picture"
-        class="block h-full object-cover rounded-md"
+        class="block h-full object-cover rounded-lg"
       >
     </div>
     <div class="flex flex-col justify-start items-center py-[0.625rem] px-5 overflow-hidden mb-5">

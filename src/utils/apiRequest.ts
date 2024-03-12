@@ -15,12 +15,12 @@ const httpClient = useHttpClient();
 
 export default function apiRequest<T>(
   url: string,
-  requestOptions: ApiRequestOptions,
+  requestOptions?: ApiRequestOptions,
   whichApi = 'base',
 ): AxiosPromise<T> {
   const {
     requestMethod = 'get', params, data,
-  } = requestOptions;
+  } = requestOptions || {};
   return httpClient.request({
     url,
     method: requestMethod,

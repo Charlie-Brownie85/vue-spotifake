@@ -27,7 +27,7 @@ const album: Ref<AlbumDetails> = ref(await fetchAlbumDetails());
       class="w-full h-full overflow-hidden flex justify-center p-2"
     >
       <img
-        :src="album.images[1]?.url"
+        :src="album?.images[1]?.url"
         alt="album picture"
         class="block h-full object-cover rounded-md"
       >
@@ -35,18 +35,18 @@ const album: Ref<AlbumDetails> = ref(await fetchAlbumDetails());
     <div class="flex flex-col justify-start items-center py-[0.625rem] px-5 overflow-hidden mb-5">
       <h2>
         <span class="font-bold text-2xl mb-1 font-body text-base-900 dark:text-base-200">
-          {{ album.name + ' · ' }}
+          {{ album?.name + ' · ' }}
         </span>
         <span class="font-light text-xl text-base-700 dark:text-base-500">{{
-          new Date(album.release_date).getFullYear()
+          new Date(album?.release_date).getFullYear()
         }}</span>
       </h2>
-      <span class="font-bold text-lg text-base-700 dark:text-base-500 mb-1">{{ album.artists[0]?.name }}</span>
+      <span class="font-bold text-lg text-base-700 dark:text-base-500 mb-1">{{ album?.artists[0]?.name }}</span>
     </div>
     <div class="flex justify-center">
       <ul class="px-8 w-full max-w-[50rem]">
         <li
-          v-for="track in album.tracks.items"
+          v-for="track in album?.tracks.items"
           :key="track.id"
           class="track"
         >

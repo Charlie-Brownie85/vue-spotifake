@@ -1,6 +1,10 @@
 import { render } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 
+import type { Mock } from 'vitest';
+
+import { useRouter } from 'vue-router';
+
 import SpotiCard from './SpotiCard.vue';
 
 import type { Album, Artist, Track } from '@/declarations/spoti.types';
@@ -10,6 +14,12 @@ import {
   artists as artistResults,
   albums as albumResults,
 } from '@/__mocks__/search-results';
+
+vi.mock('vue-router', () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
+}));
 
 const artistInfo: Artist = artistResults.items[0];
 const trackInfo: Track = trackResults.items[0];
@@ -90,5 +100,25 @@ describe('SpotiCard', () => {
 
     expect(title).toBeInTheDocument();
     expect(subtitle).toBeInTheDocument();
+  });
+
+  it('should navigate to the artist page when clicking on the card', async () => {
+    const push = vi.fn();
+    (useRouter as Mock).mockImplementationOnce(() => ({
+      push,
+    }));
+
+    const { user, getByTestId } = setup({ item: albumInfo });
+
+    const card = getByTestId('spoti-card');
+    await user.click(card);
+
+    expect(push).toHaveBeenCalledWith({
+      name: 'ItemDetails',
+      params: {
+        id: albumInfo.id,
+        type: 'album',
+      },
+    });
   });
 });

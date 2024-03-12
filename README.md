@@ -2,6 +2,7 @@
 
 - Add single item view
 - Optimize routes to add search query in path (and use it to reproduce search & results)
+- Try/catch blocks and => error view
 - Add filters
 - Add back to top
 - Add language change selector

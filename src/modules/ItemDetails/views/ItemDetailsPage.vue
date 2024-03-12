@@ -22,15 +22,28 @@ const cardComponent = computed(() => {
 </script>
 
 <template>
-  <Suspense>
-    <component
-      :is="cardComponent"
-      :id="props.id"
-    />
-    <template #fallback>
-      Loading...
-    </template>
-  </Suspense>
+  <div class="py-8">
+    <button
+      type="button"
+      class="back-button ml-5 mb-3"
+      @click="$router.back()"
+    >
+      <SVGIcon
+        name="arrow"
+        color="white"
+        class="w-4 h-4 rotate-180"
+      />
+    </button>
+    <Suspense>
+      <component
+        :is="cardComponent"
+        :id="props.id"
+      />
+      <template #fallback>
+        Loading...
+      </template>
+    </Suspense>
+  </div>
 </template>
 
 <style lang="postcss" scoped>

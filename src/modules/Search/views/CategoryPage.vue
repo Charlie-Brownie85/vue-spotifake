@@ -71,9 +71,4 @@ async function searchMore(type: Category) {
 </template>
 
 <style lang="postcss" scoped>
-.back-button {
-  @apply cursor-pointer bg-base-400 hover:bg-base-500 dark:bg-base-800 dark:hover:bg-base-700;
-  @apply flex justify-center items-center p-2 rounded-full min-w-8 min-h-8;
-  transition: background-color 0.3s ease;
-}
 </style>

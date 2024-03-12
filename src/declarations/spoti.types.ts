@@ -19,7 +19,7 @@ export type SimplifiedArtist = {
 
 export type SimplifiedTrack = {
   artists: Array<SimplifiedArtist>,
-  available_markets: Array<string>,
+  available_markets?: Array<string>,
   disc_number: number,
   duration_ms: number,
   explicit: boolean,
@@ -29,7 +29,7 @@ export type SimplifiedTrack = {
   href: string,
   id: string,
   is_playable: boolean,
-  linked_from: {
+  linked_from?: {
     external_urls: {
       spotify: string,
     },
@@ -38,7 +38,7 @@ export type SimplifiedTrack = {
     type: string,
     uri: string,
   },
-  restrictions: {
+  restrictions?: {
     reason: string,
   },
   name: string,
@@ -161,4 +161,5 @@ export type AlbumDetails = Album & {
   genres: Array<string>,
   label: string,
   popularity: number,
+  external_ids?: any,
 }

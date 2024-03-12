@@ -1,9 +1,9 @@
+import { defineComponent } from 'vue';
+
 import { render } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 
 import ResultsPanel from './ResultsPanel.vue';
-
-import SpotiCard from '@/components/SpotiCard/SpotiCard.vue';
 
 import type {
   Album,
@@ -40,11 +40,11 @@ const setup = (props: {
   user: userEvent.setup(),
   ...render(ResultsPanel, {
     global: {
-      components: {
-        SpotiCard,
-      },
       stubs: {
         transition: true,
+        SpotiCard: defineComponent({
+          template: '<div role="article" />',
+        }),
       },
     },
     props,

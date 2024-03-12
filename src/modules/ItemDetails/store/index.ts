@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 
-import { albumsEndpoint, artistsEndpoint } from '../api';
+import {
+  albumsEndpoint,
+  artistsEndpoint,
+  tracksEndpoint,
+} from '../api';
 
 import { apiRequest, getApiRoute } from '@/utils';
 import { DEFAULT_SEARCH_CONFIG } from '@/config/search.config';
@@ -8,6 +12,7 @@ import { DEFAULT_SEARCH_CONFIG } from '@/config/search.config';
 import type {
   AlbumDetails,
   Artist,
+  Track,
 } from '@/declarations/spoti.types';
 
 export const useDetailsStore = defineStore('details', () => {
@@ -31,8 +36,22 @@ export const useDetailsStore = defineStore('details', () => {
     return data;
   }
 
+  async function fetchTrack(id: string, market?: string) {
+    const route = getApiRoute(tracksEndpoint, { id });
+    const { data } = await apiRequest<Track>(
+      route,
+      {
+        params: {
+          market: market || DEFAULT_SEARCH_CONFIG.MARKET,
+        },
+      },
+    );
+    return data;
+  }
+
   return {
     fetchAlbum,
     fetchArtist,
+    fetchTrack,
   };
 });

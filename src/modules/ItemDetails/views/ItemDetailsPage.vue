@@ -3,6 +3,7 @@ import { computed } from 'vue';
 
 import AlbumCard from '@/components/AlbumCard/AlbumCard.vue';
 import ArtistCard from '@/components/ArtistCard/ArtistCard.vue';
+import SongCard from '@/components/SongCard/SongCard.vue';
 
 const props = defineProps<{
   type: string,
@@ -15,7 +16,7 @@ const cardComponent = computed(() => {
       case 'artist':
         return ArtistCard;
       case 'track':
-        return 'TrackCard';
+        return SongCard;
       default:
         return 'div';
   }

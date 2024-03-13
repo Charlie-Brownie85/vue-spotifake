@@ -82,7 +82,7 @@ export const useSearchStore = defineStore('search', () => {
     };
   }
 
-  function clearSerch() {
+  function clearSearch() {
     searchResults.value = {};
   }
 
@@ -93,7 +93,7 @@ export const useSearchStore = defineStore('search', () => {
     artistsResults,
     albumsResults,
     tracksResults,
-    clearSerch,
+    clearSearch,
     lastSearchTerm,
   };
 });

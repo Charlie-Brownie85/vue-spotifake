@@ -75,7 +75,7 @@ h2
 
 @media screen(lg) {
   #app {
-    @apply flex flex-col pb-12;
+    @apply flex flex-col;
   }
 }
 

@@ -35,26 +35,9 @@
 </template>
 
 <style lang="postcss" scoped>
-.skeleton {
-  display: block;
-  @apply text-base-400 dark:text-base-800;
-  background: linear-gradient(90deg, currentColor 0%, #b3b3b3 16.7%, currentColor 33.3%);
-  background-size: 300%;
-  animation: 1.8s shine linear infinite;
-  height: 1.5em;
-}
-
 .lines-grid {
   @apply grid justify-start;
   grid-template-columns: 12% 1fr 10%;
 }
 
-@keyframes shine {
-  0% {
-    background-position: 50%;
-  }
-  40%, 100% {
-    background-position: -80%;
-  }
-}
 </style>

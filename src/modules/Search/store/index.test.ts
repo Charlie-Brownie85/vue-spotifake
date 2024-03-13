@@ -90,7 +90,7 @@ describe('Search store', () => {
 
     expect(store.searchResults).toEqual(results);
 
-    store.clearSerch();
+    store.clearSearch();
 
     expect(store.searchResults).toEqual({});
   });

@@ -81,7 +81,7 @@ useInfiniteScroll(
     <ul
       ref="list"
       class="results-list"
-      :class="{ 'h-[80vh] overflow-y-auto': props.enableInfiniteScroll }"
+      :class="{ 'h-[80vh] overflow-y-auto infinite': props.enableInfiniteScroll }"
       data-testid="results-list"
     >
       <li
@@ -101,9 +101,27 @@ useInfiniteScroll(
 </template>
 
 <style lang="postcss" scoped>
-
 .results-list {
   @apply grid gap-3;
-  grid-template-columns: repeat(auto-fit, minmax(9.375rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+
+&:not(.infinite) {
+  grid-auto-flow: column;
+  overflow-x: hidden;
+
+  li:nth-of-type(n + 4) {
+    display: none;
+  }
+}
+}
+
+@media screen(lg) {
+  .results-list {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+
+    &:not(.infinite) li:nth-of-type(n + 4) {
+      display: block;
+    }
+  }
 }
 </style>

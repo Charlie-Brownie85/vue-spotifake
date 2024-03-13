@@ -70,7 +70,7 @@ function goToDetailsView() {
 
 <style lang="postcss" scoped>
 .spoti-card {
-  @apply bg-base-400 hover:bg-base-500 dark:bg-base-800 dark:hover:bg-base-700 cursor-pointer w-full max-w-72 grid rounded-lg;
+  @apply bg-base-400 hover:bg-base-500 dark:bg-base-800 dark:hover:bg-base-700 cursor-pointer w-full grid rounded-lg;
   grid-template-rows: 8.25rem 6.25rem;
 
   transition: background-color 0.3s ease;

@@ -1,12 +1,10 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Optimize routes to add search query in path (and use it to reproduce search & results)
 - Try/catch blocks and => error view
 - Add language change selector
 - Albums with multiple discs
 - Tests
 - Add filters
-- Review router views (header?)
 - Add back to top?
 - Add last search and display it when input is empty?
 - Review styles
@@ -24,3 +22,4 @@
 - ~~Add single item view~~
 - ~~Fix navigation between results!! KeepAlive??!!~~
 - ~~Add skeleton~~
+- ~~Optimize routes to add search query in path (and use it to reproduce search & results)~~

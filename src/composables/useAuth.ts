@@ -126,6 +126,7 @@ export const useHttpClient = (options?: HttpClientOptions): AxiosInstance => {
           isTokenExpired
           && !options?.excludedUrls?.includes(request.url)
         ) {
+          AuthState.isAuthenticated = false;
           await getAuthToken();
           request.headers.Authorization = `Bearer ${AuthState.token}`;
 

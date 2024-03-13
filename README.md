@@ -1,9 +1,8 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Fix navigation between results!! KeepAlive??!!
+- Add skeleton
 - Optimize routes to add search query in path (and use it to reproduce search & results)
 - Try/catch blocks and => error view
-- Add skeleton
 - Add language change selector
 - Albums with multiple discs
 - Tests
@@ -24,3 +23,4 @@
 - ~~Add infinite scroll (vueUse virtual scroll)~~
 - ~~Improve styles of results panel for infinite scroll (scrollbar and loader spinner?)~~
 - ~~Add single item view~~
+- ~~Fix navigation between results!! KeepAlive??!!~~

@@ -4,7 +4,10 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'ItemDetails',
     path: '/:type/:id',
-    meta: { name: 'ItemDetails' },
+    meta: {
+      name: 'ItemDetails',
+      requiresAuth: true,
+    },
     components: {
       default: () => import(
         '@/modules/ItemDetails/views/ItemDetailsPage.vue',

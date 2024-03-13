@@ -8,7 +8,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'search',
-        meta: { name: 'search' },
+        meta: {
+          name: 'search',
+          requiresAuth: true,
+        },
         components: {
           // ? header?
           // header: () => import(
@@ -24,7 +27,10 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'results',
     path: '/results/:category',
-    meta: { name: 'results' },
+    meta: {
+      name: 'results',
+      requiresAuth: true,
+    },
     components: {
       default: () => import(
         '@/modules/Search/views/CategoryPage.vue',

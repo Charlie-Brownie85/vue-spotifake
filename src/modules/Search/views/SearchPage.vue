@@ -24,8 +24,6 @@ import {
   EMPTY_SEARCH_MESSAGE,
 } from '@/config/search.config';
 
-import { initAuth } from '@/composables/useAuth';
-
 const router = useRouter();
 
 const { PREVIEW_MAX_RESULTS } = DEFAULT_SEARCH_CONFIG;
@@ -66,7 +64,6 @@ watchDebounced(
   { debounce: 200 },
 );
 
-await initAuth();
 </script>
 
 <template>

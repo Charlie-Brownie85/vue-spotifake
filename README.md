@@ -1,6 +1,5 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
-- Add skeleton
 - Optimize routes to add search query in path (and use it to reproduce search & results)
 - Try/catch blocks and => error view
 - Add language change selector
@@ -24,3 +23,4 @@
 - ~~Improve styles of results panel for infinite scroll (scrollbar and loader spinner?)~~
 - ~~Add single item view~~
 - ~~Fix navigation between results!! KeepAlive??!!~~
+- ~~Add skeleton~~

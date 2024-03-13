@@ -42,7 +42,7 @@ const cardComponent = computed(() => {
         :id="props.id"
       />
       <template #fallback>
-        Loading...
+        <SkeletonComponent />
       </template>
     </Suspense>
   </div>

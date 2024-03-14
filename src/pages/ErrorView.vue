@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 import BrokenRecord from '@/assets/img/broken-record.svg';
 
@@ -15,6 +16,8 @@ const props = withDefaults(
   },
 );
 
+const router = useRouter();
+
 const messages = computed(
   () => GlobalErrors[props.errorCode] ?? GlobalErrors.DEFAULT_ERROR,
 );
@@ -22,28 +25,28 @@ const messages = computed(
 </script>
 
 <template>
-  <div class="fixed inset-0 flex flex-col bg-white z-50">
+  <div class="flex flex-col h-[80vh]">
     <div class="flex-1 flex justify-center items-center">
       <div class="flex flex-col items-center p-4 max-w-lg">
-        <img
+        <BrokenRecord
           :src="BrokenRecord"
-          class="w-auto h-14"
+          class="w-auto h-64 ml-[10%]"
           alt="Broken record image"
-        >
-        <div class="mt-5 text-center max-w-xs">
-          <h3 class="mb-1 text-xl font-medium">
+        />
+        <div class="flex flex-col justify-center items-center mt-5 text-center max-w-xs">
+          <h3 class="mb-2 text-2xl font-bold">
             {{ $t(messages.mainErrorMsg) }}
           </h3>
           <p
             v-if="messages.subErrorMsg"
-            class="mb-1 font-light"
+            class="mb-8 font-normal text-lg"
           >
             {{ $t(messages.subErrorMsg) }}
           </p>
           <button
             type="button"
-            class="btn btn-primary"
-            @click="$router.push({ name: 'Search' })"
+            class="back-button !py-3 !px-8 font-bold"
+            @click="router.push({ name: 'Search' })"
           >
             {{ $t(messages.btnMsg) }}
           </button>

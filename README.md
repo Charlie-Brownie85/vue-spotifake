@@ -1,5 +1,6 @@
 # SPOTIFAKE MIGRATION TO VUE 3
 
+- URL stateful in category views?
 - Try/catch blocks and => error view
 - Add language change selector
 - Albums with multiple discs

@@ -46,7 +46,7 @@ const messages = computed(
           <button
             type="button"
             class="back-button !py-3 !px-8 font-bold"
-            @click="router.push({ name: 'Search' })"
+            @click="router.push({ name: 'search' })"
           >
             {{ $t(messages.btnMsg) }}
           </button>

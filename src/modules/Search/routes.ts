@@ -2,27 +2,21 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'Search',
+    name: 'search',
     path: '/search',
-    children: [
-      {
-        path: '',
-        name: 'search',
-        meta: {
-          name: 'search',
-          requiresAuth: true,
-        },
-        components: {
-          // ? header?
-          // header: () => import(
-          //   '@/components/Header.vue'
-          // ),
-          default: () => import(
-            '@/modules/Search/views/SearchPage.vue',
-          ),
-        },
-      },
-    ],
+    meta: {
+      name: 'search',
+      requiresAuth: true,
+    },
+    components: {
+      // ? header?
+      // header: () => import(
+      //   '@/components/Header.vue'
+      // ),
+      default: () => import(
+        '@/modules/Search/views/SearchPage.vue',
+      ),
+    },
   },
   {
     name: 'results',

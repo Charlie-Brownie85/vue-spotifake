@@ -63,8 +63,13 @@ function seeMoreResults(category: Category) {
 onMounted(async () => {
   if (searchTerm.value.length) {
     isSearching.value = true;
-    await search(searchTerm.value);
-    isSearching.value = false;
+    try {
+      await search(searchTerm.value);
+    } catch (error) {
+      router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
+    } finally {
+      isSearching.value = false;
+    }
   }
 });
 
@@ -84,8 +89,13 @@ watch(
   () => route.query.q as string,
   async (newSearchTerm) => {
     if (newSearchTerm?.length) {
-      await search(newSearchTerm);
-      isSearching.value = false;
+      try {
+        await search(searchTerm.value);
+      } catch (error) {
+        router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
+      } finally {
+        isSearching.value = false;
+      }
     }
   },
 );

@@ -2,6 +2,8 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import { useRouter } from 'vue-router';
+
 import type {
   Album,
   Artist,
@@ -15,6 +17,8 @@ import { useSearchStore } from '@/modules/Search/store';
 const props = defineProps<{
   category: Category,
 }>();
+
+const router = useRouter();
 
 const searchStore = useSearchStore();
 const { searchNextPage } = searchStore;
@@ -35,7 +39,11 @@ const resultsDictionary = {
 const results = computed(() => resultsDictionary[props.category].value);
 
 async function searchMore(type: Category) {
-  await searchNextPage(type);
+  try {
+    await searchNextPage(type);
+  } catch (error) {
+    router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
+  }
 }
 
 </script>

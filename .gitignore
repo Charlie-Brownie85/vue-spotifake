@@ -40,3 +40,5 @@ coverage
 *.tsbuildinfo
 
 components.d.ts
+
+TODOS.md

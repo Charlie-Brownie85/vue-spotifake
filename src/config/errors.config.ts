@@ -11,4 +11,14 @@ export const GlobalErrors: GlobalErrorsConfig = {
     subErrorMsg: 'We failed getting authentication from Spotify.',
     btnMsg: 'Try again',
   },
+  SEARCH_ERROR: {
+    mainErrorMsg: 'Search error',
+    subErrorMsg: 'We failed getting results from Spotify.',
+    btnMsg: 'Please, try again',
+  },
+  ITEM_DETAILS_ERROR: {
+    mainErrorMsg: 'Item info error',
+    subErrorMsg: 'We had some problems retrieving this item info from Spotify.',
+    btnMsg: 'Please, try again',
+  },
 };

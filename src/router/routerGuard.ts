@@ -6,6 +6,8 @@ import {
   initAuth,
 } from '@/composables/useAuth';
 
+import { GlobalErrors } from '@/config/errors.config';
+
 export async function validateAccess(to: RouteLocation) {
   const { meta } = to;
 
@@ -13,7 +15,7 @@ export async function validateAccess(to: RouteLocation) {
     try {
       await initAuth();
     } catch (error) {
-      return { name: 'Error' };
+      return { name: 'Error', params: { errorCode: GlobalErrors.AUTH_ERROR } };
     }
   }
 
@@ -25,7 +27,7 @@ export async function validateAccess(to: RouteLocation) {
     try {
       await getAuthToken();
     } catch (error) {
-      return { name: 'Error' };
+      return { name: 'Error', params: { errorCode: GlobalErrors.AUTH_ERROR } };
     }
   }
   return true;

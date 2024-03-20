@@ -1,7 +1,7 @@
 export type GlobalError = {
   mainErrorMsg: string,
   btnMsg: string,
-  subErrorMsg?: string,
+  subErrorMsg: string,
 }
 
 export type GlobalErrorName = 'DEFAULT_ERROR'

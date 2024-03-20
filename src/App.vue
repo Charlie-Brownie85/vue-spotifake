@@ -3,9 +3,7 @@
 
 <template>
   <main>
-    <div class="flex justify-end">
-      <DarkMode />
-    </div>
+    <HeaderCompo />
     <router-view v-slot="{ Component }">
       <Transition mode="out-in">
         <component

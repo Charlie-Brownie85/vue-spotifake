@@ -11,8 +11,14 @@ const itemsNumber = props.infinite ? 12 : 5;
 <template>
   <div class="mb-6">
     <div class="flex justify-between mb-2">
-      <span class="skeleton rounded-sm w-32" />
-      <span class="skeleton rounded-sm w-20" />
+      <span
+        class="skeleton rounded-sm w-32"
+        data-testid="skeleton-pill"
+      />
+      <span
+        class="skeleton rounded-sm w-20"
+        data-testid="skeleton-pill"
+      />
     </div>
     <ul
       class="skeleton-list"
@@ -21,7 +27,7 @@ const itemsNumber = props.infinite ? 12 : 5;
     >
       <li
         v-for="item in itemsNumber"
-        :key="item.id"
+        :key="item"
         class="block skeleton w-full !h-56 rounded-lg"
       />
     </ul>

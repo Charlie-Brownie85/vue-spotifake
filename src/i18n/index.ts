@@ -4,7 +4,7 @@ import projectLocales from '@/locales';
 
 const i18nConfig = {
   legacy: false,
-  locale: 'en',
+  locale: localStorage.getItem('locale') || 'en',
   fallbackLocale: 'en',
 };
 

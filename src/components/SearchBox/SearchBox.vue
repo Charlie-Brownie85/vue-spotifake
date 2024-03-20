@@ -26,7 +26,7 @@ const fillColor = computed(() => (isDark.value ? '#F2F2F2' : '#212121'));
       name="searchbox"
       id="searchbox"
       v-model="model"
-      placeholder="Search for music"
+      :placeholder="$t('Search for music')"
       class="block outline-none shadow-none w-full h-full rounded-2xl px-10 text-lg font-body"
       autofocus
     >

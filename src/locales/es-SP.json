@@ -1,8 +1,15 @@
 {
   "Authentication error": "Error de autenticación",
+  "Displaying results for: {searchTerm}": "Mostrando resultados para: {searchTerm}",
+  "Oops! No results found...": "¡Ups! No se encontraron resultados...",
+  "Oops! Something went wrong...": "¡Ups! Algo salió mal...",
   "Please, try again later.": "Por favor, inténtalo de nuevo más tarde.",
   "Return to search": "Volver a buscar",
+  "Search for music": "Busca música",
+  "See more": "Ver más",
+  "Select": "Seleccionar",
   "Try again": "Inténtalo de nuevo",
-  "Oops! Something went wrong...": "¡Ups! Algo salió mal...",
-  "We failed getting authentication from Spotify.": "Error al obtener autenticación de Spotify."
+  "We failed getting authentication from Spotify.": "Error al obtener autenticación de Spotify.",
+  "What would you like to listen to?": "¿Qué te gustaría escuchar?",
+  "{n} followers": "{n} seguidores"
 }

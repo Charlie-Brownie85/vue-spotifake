@@ -57,6 +57,7 @@ Some of the features the app accomplishes and DevEx worth to mention:
 - **Infinite scrolling** implementation in the category results view using `@vueuse/core`'s `useInfiniteScroll`
 - Usage of **async components** with `<Suspense>`
 - **Dark/Light theming** with tailwind and `@vueuse/core`
+- **Language selection** and storage of these settings using `localStorage`
 - Implemented **skeletons** as placeholder while async components load/ fetch data
 - Dynamically injecting **SVG inline** with `vite-svg-loader` and some custom component
 - **Auto-import of components** with `unplugin-vue-components`

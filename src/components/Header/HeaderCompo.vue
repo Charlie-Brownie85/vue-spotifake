@@ -1,5 +1,18 @@
 <script setup lang="ts">
+import { watch } from 'vue';
+
 import AppLogo from '@/assets/icons/app-logo.svg';
+import { locales } from '@/config/locales';
+
+import i18n from '@/i18n';
+
+const { locale } = i18n.global;
+
+// @ts-ignore
+watch(locale, (newValue: string, oldValue: string) => {
+  if (newValue === oldValue) return;
+  localStorage.setItem('locale', newValue);
+});
 </script>
 
 <template>
@@ -19,7 +32,12 @@ import AppLogo from '@/assets/icons/app-logo.svg';
         </h1>
       </RouterLink>
     </div>
-    <div class="flex justify-end items-center">
+    <div class="flex justify-between items-center gap-2">
+      <SelectComponent
+        v-model="locale"
+        :options="locales"
+        class="w-20"
+      />
       <DarkMode />
     </div>
   </header>
@@ -27,6 +45,6 @@ import AppLogo from '@/assets/icons/app-logo.svg';
 
 <style lang="postcss" scoped>
 header {
-  grid-template-columns: 1fr 6.25rem;
+  grid-template-columns: 1fr 7rem;
 }
 </style>

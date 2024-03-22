@@ -20,7 +20,7 @@ export interface Props {
   yPosition?: 'top' | 'bottom',
   margin?: number,
   disabled?: boolean,
-  zIndexMenu?: number,
+  zIndexMenu?: number | string,
   closeOnScroll?: boolean,
   closeOnOutside?: boolean,
 }

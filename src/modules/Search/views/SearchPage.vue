@@ -3,7 +3,6 @@ import {
   ref,
   computed,
   reactive,
-  onMounted,
   watch,
 } from 'vue';
 import type { ComputedRef } from 'vue';
@@ -56,22 +55,22 @@ const noResults = computed(
   () => results.every((subResults) => !subResults.value?.items?.length),
 );
 
+async function performSearch(term: string) {
+  if (!term?.length) return;
+
+  isSearching.value = true;
+  try {
+    await search(term);
+  } catch (error) {
+    router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
+  } finally {
+    isSearching.value = false;
+  }
+}
+
 function seeMoreResults(category: Category) {
   router.push({ name: 'results', params: { category } });
 }
-
-onMounted(async () => {
-  if (searchTerm.value.length) {
-    isSearching.value = true;
-    try {
-      await search(searchTerm.value);
-    } catch (error) {
-      router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
-    } finally {
-      isSearching.value = false;
-    }
-  }
-});
 
 watchDebounced(
   searchTerm,
@@ -87,17 +86,10 @@ watchDebounced(
 
 watch(
   () => route.query.q as string,
-  async (newSearchTerm) => {
-    if (newSearchTerm?.length) {
-      try {
-        await search(searchTerm.value);
-      } catch (error) {
-        router.push({ name: 'error', params: { errorCode: 'SEARCH_ERROR' } });
-      } finally {
-        isSearching.value = false;
-      }
-    }
+  (newSearchTerm) => {
+    performSearch(newSearchTerm);
   },
+  { immediate: true },
 );
 
 </script>
